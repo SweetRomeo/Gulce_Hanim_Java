@@ -1,0 +1,1234 @@
+/*----------------------------------------------------------------------------------------------------------------------
+	Java Platformunun Temel Özellikleri:
+	Arakodlu Çalışma Sistemi:
+		C ve C++ gibi dillerde yazılan kodlardan çalışabilen bir dosya (executable file) elde
+		edildiğinde bu dosyanın içerisinde çalıştırılacak sisteme özgü (genel işletim sistemi, donanım vb.) doğrudan
+		çalıştırılabilecek makine kodları bulunur. Oysa Java programlama dili ile yazılan bir program "derlendiğinde (compilation)"
+		oluşan dosyanın içerisinde hiç bir sistemin dili olmayan yapay bir arakod bulunur. Bu arakoda "byte code" denir.
+		"Byte code" doğrudan çalıştırılamaz. Byte code bir başka uygulama (program) tarafından çalıştırılır. İşte program
+		çalışma sırasında byte code içerisindekileri makine koduna dönüştürür. Bu dönştürme işlemine genel olarak
+		"Just In Time Compilation (JIT Compilation)" denir. Geliştirme ve çalıştırma anlamında şu temel kavramlar önemlidir:
+			JVM (Java Virtual Machine): Byte code'u derleyerek (JIT) sisteme ilikin aşağı seviyeli koda dönüştürür. JVM
+			aslında "byte code'un nasıl yorumlanacağına yönelik soyutlanmış bir kavramdır.
+
+			JRE (Java Runtime Environment): Genel olarak Java ile yazılmış bir uygulamayı bir uygulamayı çelıştırmak (run)
+			için gereken araçları ve uygulamaları içeren bir pakettir. Yani program Java ile yazıldığında edildiğinde bu
+			programın çalıştırılabilmesi için JRE'ye ihtiyaç vardır.
+
+			JDK (Java Development Kit): Geliştirme (development) araçlarını ve çalıştırma araçlarının da birçoğunu barındıran
+			bir pakettir. Buradaki çalıştırma araçları geliştirme aşamasında kullanılabilir.
+        Low level languages-> assembly                  Prosedürel-> C                      High level languages->C++,Java,C#,Kotlin,Python
+        byte code
+		Ticari kullanımlarda özellikle Java 11 ile birlikte bir takım değişiklikler yapılmıştır. Genel olarak şöyle
+		söylenebilir: Java'da geliştirme ortamı ücretsiz, çalıştırma araçları kullanılan araca göre ücretlendirilebilir. Tamamen
+		ücretsiz olan "Open JRE" denilen ayrı bir ürün de vardır. Bu kavramdır zamanla anlaşılacaktır. Burada anlatılanlar
+		geneldir.
+
+		Arakodlu çalışma sisteminin en önemli avantajı, geliştirilen uygulamalar genel olarak sistemden bağımsız olarak
+		çalıştırılabilir. Dolayısıyla sistemden bağımsız olarak yazılır. Bu kavrama "Write Once Run Anywhere (WORA)" denir.
+
+		Ayrıca unutulmamalıdır ki, arakodlu çalışma sistemi ufak da olsa bir performans kaybına yol açar. Ancak Java'nın
+		hedefi olan uygulamalar için bu kayıp gözardı edilebilir. Bu durumda bir çok araç da kullanılabilir.
+
+	Geniş bi sınıf kütüphanesi: Java'da geniş bir sınıf kütüphanesi bulunur. Veritabanı, web programlama, dosya işlemleri vb.
+	işlemler için hazır sınıflar vardır.
+
+	Hızlı uygulama geliştirme ortamı: Java hızlı uygulama geliştirme (rapid application development) ortamı sunar. Bu anlamda
+	hem öğrenmesi kolaydır, hem de ürün daha çabuk elde edilir.
+
+	Güvenli çalışma ortamı: Java'da yazılmış olan programların sisteme zarar verme olasılıkları çok daha azdır. Yazılan bir
+	program yüzünden yanlışlıkla makinede bir problem çıkma olasılığı çok daha azdır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Programlama Dillerinin Sınıflandırılması:
+	1. Seviyelerine (level) göre sınıflandırma: Seviye bir programlama dilinin insan algısına yakınlığının bir ölçüsüdür.
+	Yüksek seviyeli (high level) diller hem dil özellikleri hem de uygulama geliştirme olarak kolay öğrenilebilen, insan
+	algısına yakın dillerdir. Aşağı seviyeli (low level) diller makinenin doğal çalışmasına daha yakındır. Olabilecek en aşağı
+	seviyeli dil saf mekine dilidir.
+    makine dili -> düşük seviyeli diller -> prosedürel diller -> yüksek seviyeli diller -> insan dili
+	2. Kullanım alanlarına göre sınıflandırma: Dilin hangi alanlarda kullanılabileceğinin sınıflandırılmasıdır. Bazı diller
+	birden fazla alanda kullanılabilirler. Bu anlamda genel amaçlı diller, bilimsel ve mühendislik dilleri, oyun ve animasyon
+	dilleri, veritabanı dilleri vb.
+
+	3. Programlama modeline göre sınıflandırma: Bir programı yazarken kullanılan genel model (paradigm) önemlidir. Bazı
+	dillerde sınıf yoktur. Program çeşitli alt programların (function) birbirlerini çağırması yoluyla yazılır. Bu tekniğe
+	"procedurel model" denir. Bazı dillerde sınıf vardır. Program sınıflar kullanılarak yazılır. Başka bir çok kavramla
+	birlikte sınıflar da kullanılarak yazılan modele "object oriented" model denir. Bazı dillerde programlar matematiksel
+	formül yazıyormuş gibi yazılır. Bu programlama modeline de "functional" model denir. Bazı diller birden fazla modeli
+	destekler. Bu tip dillere "multi paradigm" diller denir. Burada birden fazla modeli desteklemesi, modelin her özelliğini
+	desteklemesi anlamına gelmeyebilir. object base, object oriented
+
+	Buna göre Java, genel amaçlı, web programlama, yapay zeka, bilimsel ve mühendislik vb alanlarında kullanılabilen,
+	nesne yönelimli, özellikle Java 8 ile birlikte fonksiyonel programlama özelliklerinin de geliştirilmiş olduğu yüksek
+	seviyeli bir programlama dilidir.
+
+	Makine dili(byte code)..........Assembly.................Prosedürel(C)..............Yüksek seviyeli diller...........insan dili
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Yukarıda anlatılan kavramların detayları vardır. Bunlar zaman içerisinde ele alınacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Temel Kavramlar:
+	Çevirici program (translater), derleyici (compiler), yorumlayıcı (interpreter): Bir programlama dilinde yazılmış olan
+	programı eşdeğer olarak başkabir programlama diline dönüştüren programlara "translater" denir. Çevirici programlarda
+	kaynak dil (source language) ve hedef dil (target/destination language) söz konusudur. Örneğin, Java'dan Kotlin'e dönüştürme
+	yapan program bir çevirici programdır. Bir çevirici programda hedef dil aşağı seviyeli bir dil (saf makine dili, sembolik
+	makine dili, arakod vb) ise bu durumda çevirici programa özel olarak "derleyici (compiler)" denir. JVM'in byte code'u
+	makine koduna dönüştürme faaliyeti de bir derleme işlemidir. Bu işlem çalışma ortamı içerisinde JIT derleyicisi tarafından
+	yapılır. Bazı programlar hiç kod üretmeden doğrudan çalıştırılırlar. Bunları çalıştıran programlara da "yorumlayıcı (interpreter)"
+	denir. Bazı diller yalnızca yorumnlayıcı ile, bazı diller yalnızca derleyici ile, bazı diller ise her ikisi ile de
+	kullanılabilmektedir. Java 11 ile "java" programı yorumlayıcı olarak da çalışabilmektedir. Ancak pratikte Java programları
+	ile derleyici kullanılır.
+
+	Anahtar Notlar: Bir uygulama tek bir java dosyasından oluşmak zorunda değildir. İleride anlatılacağı gibi her java
+	dosyası (hatta her sınıf) ayrı derlenir. Bir ürün aslında tüm birimlerinin uygun şekilde derlenmesi veya ele alınmasıyla
+	elde edilir. Bu işleme genel olarak "build" işlemi denir. Build işlemi sadece derleme işlemi değildir. Yani bir
+	uygulamanın ürün olarak elde edilemesi süreci "build" işlemidir.
+
+	İşletim Sistemi (operating system): Makinenin donanımını yöneten, bilgisayar ile kullanıcı arasında köprü görevi
+	gören sistem yazılımıdır. Bir işletim sisteminin pek çok görevi vardır. Örneğin, programları çalıştırmak, çeşitli
+	donanım aygıtlarını yönetmek vb. İşletim sistemleri genel olarak "masaüstü (desktop)" ve "mobil (mobile)" olmak
+	üzere iki gruba ayrılabilir.
+
+	Açık kaynak kodlu yazılım, özgür yazılım ve mülkiyete sahip yazılım: Özgür yazılım (free software)  ve açık kaynak kodlu
+	yazılımın (open source) aralarında farklar olsa da genel olarak aşağıdaki özelliklere sahiptir:
+
+	- Bedavadır. Kullanılabilmesi için bir lisans ücreti ödenmesi gerekmez.
+	- Kaynak kodlar sahiplenilmez. Kaynak koda ekleme yapıldığında kodlar kapatılamaz. Onların da açılması gerekir.
+	- Çoğaltılabilir, izin almadan kullanılabilir.
+
+	Bunun tam tersi "mülkiyete sahip (propriatery)" yazılımlardır. Bu yazılımlar para verilerek kullanılırlar. Çoğaltılamazlar
+	ya da çoğaltılması için belirli koşulları olur.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	IDE (Integrated Development Environment): Derleyiciler komut satırından çalışan basit arayüzlere sahip programlardır.
+	Aslında teorik olarak Java ile geliştirilecek bir uygulama içerisinde tüm java dosyaları (ve hatta diğer proje dosyları bile)
+	"notepad" gibi basit bir editör program ile yazılıp, komut satırından derlenip çalıştırılabilir. Fakat pratikte bu şekilde
+	program yazmak fazlaca zaman kaybettirir. Yazılım geliştirmeyi kolaylaştırmak için IDE programlar kullanılır. IDE'ler
+	içerisinde editörler, test araçları, çeşitli kodlar üreten araçlar vb. bulunur. IDE bir derleyici değildir. IDE derleme işlemi
+	için derleyiciyi de çalıştırabilir. Uygulamayı çalıştırmak için de JRE araçlarını kullanabilir. Java ile uygulama geliştirirken
+	kullanılabilecek çeşitli IDE'ler bulunmaktadır. Bunlardan en yaygın olarak kullanılanları "Eclipse" ve "IntelliJ IDEA"
+	IDE'leridir. Önceleri Netbeans isminde bir IDE de kullanılmaktaydı. Ancak son yıllarda kullanımı oldukça azalmıştır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Dil Kavramı: Dil iletişimde kullanılan semboller topluluğudur. Bir dilin kurallarına gramer denir. Gramerin birçok
+	alanı vardır. Bunlardan en önemlileri "sentaks (syntax)" ve "semantik (semantic)" alanlarıdır. Bir olgunun dil
+	olabilmesi için en azından sentaks ve semantiğe sahip olması gerekir.
+
+	Sentaks doğru yazma ve doğru dizilime ilişkin kurallardır. Örneğin
+		"I go to will school"
+	cümlesinde sentaks hatası yapılmıştır. Java ile örneklersek:
+		System.out.println("Hello, World";
+	deyiminde kapanan parantez olmadığı için sentaks hatası yapılmıştır.
+
+	Dildeki doğru dizilmiş öğelerin ne anlam ifade ettğine yönelik kurallara semantik denir.
+
+	Bilgisayar Dilleri ve Programlama Dilleri: Bilgisayar bilimlerinde kullanılmak üzere tasarlanmış dillere
+	"bilgisayar dilleri (computer language)" denir. Bir bilgisayar dilinde "akış (flow)" da varsa o zaman
+	"programlama dili (programming language)" denir. Örneğin XML, HTML dilleri programlama dili değildir. Bilgisayar dilleridir.
+	Java, C++, C vb dillerde akış da olduğundan programlama dilleridir.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Hello, World programı
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		System.out.println("Hello, World");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Atom (Token):
+	Bir programlama dilinde kendi başına anlamlı olan en küçük birime atom denir. Atomlar Java'da 6(altı) gruba ayrılırlar:
+	1. Anahtar Sözcükler (keywords, reserved words): Dil için özel bir anlamı olan, yani dil tarafından bilinen ve birçoğu
+	doğrudan değişken ismi olarak kullanılamayan atomlardır. Örneğin: package, class, public, static, void,for,int vb.
+
+	2. Değişken atomlar (identifiers, variables): İsmini programcının belirlediği ve isimlendirmeye yönelik kuralları olan
+	atomlardır. Örneğin: String, csd, App vb.
+
+	3. Operatörler (operators): Bir işleme yola açan ve bu işlem sonucunda bir değer üreten atomlardır. Örneğin a + b
+	ifadesinde + bir operatördür. instanceof new, >> << ~ % & && | ||
+
+	4. Sabitler (literals, constants): Program içerisinde doğrudan yazılan sayılara denir. Örneğin a - 2 ifadesinde
+	2 bir sabittir. 100 20.4 34.5F 23D 190L 'A'
+
+	5. String'ler (Strings, String literals): İki tırnak içeriside bulunan yazılar tırnaklarıyla birlikte String atomudur.
+	Örneğin: "Hello, World" String str = "Murat";
+
+	6. Ayraçlar (delimiters, punctuator): Yukarıdaki gruplar dışında kalan tüm atomlardır. Örneğin: {} vb.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Boşluk karakterleri (whitespaces): Klavyeden basıldığında boşluk algısı yaratan karakterlerdir. Klavyeden basılabilen
+	boşluk karakterleri tipik olarak şunlardır: space, tab, enter.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Java'da kod yazım kuralları şunlardır
+	1. Atomlar arasında istenildiği kadar boşluk (whitespace) bırakılabilir.
+	2. Anahtar sözcükler ve değişkenler dışından kalan atomlar istenildiği kadar bitişik yazılabilirler. Anahtar sözcükler
+	ve değişken atomlar arasında en az bir tane boşluk (whitespace) karakteri olmalıdır
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Atomlar arasında istenildiği kadar boşluk (whitespace) bırakılabilir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App
+
+
+
+
+
+
+
+
+				{
+	public static 					void main(String [] args)
+	{
+		System
+
+
+
+		.
+
+
+		out
+
+
+
+
+		.
+
+
+
+		println("Hello, World");
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar sözcükler ve değişkenler dışından kalan atomlar istenildiği kadar bitişik yazılabilirler.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;class App{public static void main(String[]args){System.out.println("Hello, World");}}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar sözcükler ve değişken atomlar arasında en az bir tane boşluk (whitespace) karakteri olmalıdır
+-----------------------------------------------------------------------------------------------------------------------*/
+packagecsd;class App{public static void main(String[]args){System.out.println("Hello, World");}} //error
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Java'da "derleme zamanı (compile time)" ve "çalışma zamanı (run time)" denilen birbiriyle ilişkili
+	ancak ayrı olan iki kavram vardır. "Derleme zamanı" derleme sürecinde yapılan işlemlere denir. Çalışma zamanı ise
+	programın çalışması sürecinde yapılan işlemlere denir.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Derleyicinin hata mesajları (diagnostics)
+	1. Gerçek hatalar (error veya compile time error): Dilin sentaks ya da semantik kurallarına uyulmamasından dolayı verilen mesajlardır.
+	Bu durumda "byte code" üretilmez. Programcının bu hataları düzeltip derlemesi gerekir.
+
+	2. Uyarılar (warnings): Byte code'un üretimine engel olmayan, olası programlama ve mantık hatalarının bildirilmesi
+	için verilen mesajlardır. Programcı bu uyarılar kesinlikle dikkate almalıdır. Özel bir durum yoksa uyarı mesajlarının
+	oluşumuna yol açan kodlar düzeltilmeldir. Bazı durumlarda derleyicinin uyarı mesajı vermediği ancak IDE'nin kullandığı
+	bir "static kod analizi aracı" konfigürasyonları gereği uyarı verebilir. Bunlar da dikkate alınmalıdır. Ancak hepsinin
+	düzeltilmesi gerekmez.
+
+	3. Ölümcül hatalar (fatal errors): Derleme işleminin bile tamamlanmasını engelleyen hatalardır. Bu durumda programcının
+	yazdığı kod açısından yapacak birşeyi yoktur. Çünkü kod henüz derlenmemiş bile olabilir. Programcının ölümcül hataya
+	yol açan durumu ortadan kaldırması gerekir. Örneğin diskte yer kalmaması, derlenecek dosyanın bulunanaması gibi durumlar
+	ölümcül hatalara yol açar.
+
+	Programın çalışma zamanı sırasında oluşan hatalı durumlara genel olarak "exception" denir. Exception işlemleri
+	ileride "exception handling" isimli bölümde ele alınacaktır. Bu konu ele alınana kadar exception oluştuğunda
+	"program sonlanır" olarak anlaşılacaktır. Exception terimi yerine "runtime error" da kullanılmaktadır. "error" dendiğinde
+	"compile-time error" anlaşılır.
+------------------------------------------------------------------------------------------------------------------------*/
+class App{
+    public static void main(String[]args)
+    {
+        int val = 0;
+        try
+        {
+            java.util.Scanner kb = new java.util.Scanner(System.in);
+            System.out.println("Bir sayı giriniz");
+            val = Integer.parseInt(kb.nextLine());
+        }
+        catch (ArithmeticException ex1)
+        {
+            System.out.println("Exception caught what() : Arithmetic Exception");
+        }
+        catch(ArrayIndexOutOfBoundsException ex2)
+        {
+            System.out.println("Exception caught what() : ArrayIndexOutOfBoundsException");
+        }
+        catch (Exception ex3)
+        {
+            System.out.println("Exception caught what() : Exception");
+        }
+        System.out.printf("%d%n",val);
+    }
+}
+/*-----------------------------------------------------------------------------------------------------------------------
+	Bildirim (declaration): Bir ismin derleyice tanıtılmasıdır. Derleyici bildirim ile o ismin ne anlama geldiğini anlar
+	ve derleme işlemini ona göre yapar.
+	User defined types:
+	1-)enums
+	2-)interfaces
+	int a;
+	double b;
+	String str;
+	enum Color{
+	Red,Brown,Purple
+	};
+	Myclass m1;
+	interface Person{
+	}
+	Myclass m = new Myclass();
+	m.x = 10;
+	delete m;
+-----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+	Java'da yorum satırları (comment lines)
+-----------------------------------------------------------------------------------------------------------------------*/
+
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		System.out.println("Hello, World"); // Burası derleyici tarafından dikkate alınmayacak
+	}
+}
+
+/*
+	Bu bölge de derleyici tarafında dikkate
+	alınmayacak
+ */
+
+// Burası da derleyici tarafından dikkate alınmayacak
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Java'da 1(bir)'den fazla java dosyası ile çalışmanın bir takım ayrıntıları vardır. Bu sebeple o
+	ayrıntılara gelene kadar hep tek bir java dosyası ile çalışacağız
+-----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Bir Java programı genel olarak paketlerden, paketler sınıflardan, sınıflar da metotlardan oluşur.
+
+	paket bildiriminin genel biçimi:
+
+	package <isim>;
+
+	Örneğin:
+	package csd;
+
+	Paketler konusuna kadar yalnızca csd paketi altında çalışacağız. Paketler konusu ileride detaylı olarak ele alınacaktır
+
+	Sınıf bildiriminin (bazı detaylar hariç) genel biçimi:
+
+	class <isim> {
+		//...
+	}
+
+	örneğin:
+	class Sample {
+		//...
+	}
+
+	Sınıf nesne programlama tekniğinin temel taşlarından biridir. Kurs boyunca sınıflar detaylı bir biçimde ele alınacaktır.
+
+	Java'da alt programlamlara "metot (method)" denir. Alt programın ne yapacağının yazılmasına "metot bildirimi (method declaration)"
+	denir. Alt programın (yani metodun) kodlarının çalıştırılmasına ise "metot çağırma (method call)" denir. Metot çağrısı başka
+	bir metodun içerisinde yapılabilir. Metot bildirimi ise genel olarak sınıf içerisinde yapılabilir.
+
+	Metot bildiriminin genel biçimi:
+
+	[erişim belirleyici] [static] <geri dönüş değeri bilgisi> <metot ismi>([parametreler])
+	{
+		//...
+	}
+
+
+	Açıklamalar:
+	car -> Bmw -> BmwCoupe
+	- Erişim belirleyici şunlardan biri olabilir: public, private, protected, no-modifier (hiç bir şey yazmamak), private
+	Metotların erişim belirleyicileri konusuna gelene kadar tüm metotları public olarak bildireceğiz.
+
+	- Bir metot static veya non-static olabilir. static anahtar sözcüğü bildirimde yazılmazsa metot non-static olur. İlgili
+	konuya gelene kadar tüm metotları static olarak bildireceğiz.
+
+	- Erişim belirleyici ve static anahtar sözcükleri aynı sentaks seviyesinde olduğundan yerleri değiştirilebilir. Ancak
+	okunabilirlik/algılanabilirlik açısından bir erişim belirleyiciyi static anahtar sözcüğünden önce yazacağız.
+
+	- Metodun geri dönüş değeri bilgisi metot isminden önce yazılmalıdır.  Metodun geri dönüş değerinin olmaması durumunda
+	buraya void yazılması gerekir. Geri dönüş değeri kavramı ileride ele alınacaktır.
+
+	- Metodun ismi bir değişken atomdur. Tüm değişken atomlarda olduğu gibi "değişken isimlendirme kuralları"'na uygun
+	olarak isimlendirilir.
+
+	- Metot bildiriminde metot isminde sonra parantezler içerisinde ismine "metot parametre değişkeni (method parameter)"
+	denilen değişkenler bildirilebilir. Metodun herhangi bir parametresi yoksa parantezler içi boş bırakılır. Metot
+	parametre değişkenleri ileride ele alınacaktır.
+
+	- Metot bildiriminde küme parantezleri arasında metodun kodları yazılır. Küme parantezleri ve içerisindeki kodlara
+	"metodun gövdesi (method body)" denir.
+
+	- static bir metodun çağrılmasının genel biçimi:
+
+	[paket ismi].[sınıf ismi].<metot ismi>([argümanlar]);
+
+	Bir program main metodunun çağrılmasıyla başlar. Programcının main içerisinde çağırdığı metotlar ve metotların
+	içerisinde  çağrılan metotlar ile akış (flow) devam eder. main metodu JVM tarafından çağrılır. Bu anlamda java
+	programına (kabaca JVM'e) verilen "byte code"'a ilişkin sınıfın main metoduna "giriş noktası (entry point)" denir.
+	Özel bazı durumlar dışında main sonlandığında program sonlanır. Bir metot çağrıldığında akış metodun kodlarına
+	dallanır (call) ve metodun kodları çalıştırılır. Şüphesiz metot içerisinde de başka bir metot çağrılıyor olabilir.Yine
+	bu çağırma noktasında akış metoun kodlarına dallanır. Metot çağrısı bittiğinde akış çağrıldığı noktaya geri döner ve
+	bir sonraki koddan çalışmaya devam eder.
+
+	Anahtar Notlar: System.out.println("Hello, World"); çağrısında System bir sınıf, out bir referans ve println de
+	non-static bir metottur. Bu kavramlar ileride ele alınacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		System.out.println("Hello, World");
+		csd.Sample.foo();
+		csd.Sample.bar();
+		csd.Mample.tar();
+		System.out.println("Goodbye, World");
+	}
+}
+
+class Sample {
+	public static void foo()
+	{
+		System.out.println("Sample.foo");
+	}
+
+	public static void bar()
+	{
+		System.out.println("Sample.bar");
+	}
+}
+
+
+class Mample {
+	public static void tar()
+	{
+		System.out.println("Mample.tar");
+		csd.Sample.foo();
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Çağıran metodun (caller) ait olduğu sınıf ile çağrılan metodun (callee) ait olduğu sınıf aynı pakette ise paket ismi
+	yazılmayabilir. Çağıran metot ile çağrılan metot aynı sınıfta ise bu durumda çağırma sırasında paket ismi yazılmayacaksa
+	sınıf ismi de yazılmayabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		System.out.println("App.main");
+		System.out.println("Hello, World");
+		Sample.foo();
+		Sample.bar();
+		csd.Mample.tar();
+		System.out.println("Goodbye, World");
+	}
+}
+
+class Sample {
+	public static void foo()
+	{
+		System.out.println("Sample.foo");
+		bar();
+	}
+
+	public static void bar()
+	{
+		System.out.println("Sample.bar");
+	}
+}
+
+
+class Mample {
+	public static void tar()
+	{
+		System.out.println("Mample.tar");
+		Sample.foo();
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	04.09.2022
+	Tür (type): Bir değişken için bellekte ne kadar yer ayrılacağını ve içerisindeki verinin hangi yöntemle tutulacağını
+	belirten kavramdır.
+    Javada 2 tip tür vardır:
+    1-)Primitive types(int,boolean,float...)
+    2-)User-defined types:
+        a-)enums
+        b-)interface
+        c-)class types
+	Java'da türler genel olarak iki gruba ayrılır:
+	Temel türler (primitive/built-in/predefined types), programcının tanımladığı türler (user defined types)
+    Wrapped class(Sarmalayan) Integer
+	Her temel tür ismi bir anahtar sözcük ile temsil edilir:
+
+	Temel türler aşağıdaki tabloda belirtilmiştir:
+
+	Tür ismi				Uzunluğu (byte)
+	short						2
+   *int							4 => 2^32
+	long						8 => 2^64
+	byte						1
+
+	float						4
+   *double						8
+
+	char						2
+	boolean						-
+
+	Açıklamalar:
+
+	- Java'da türlerin uzunlukları boolean türü dışında sistemden sisteme değişmez
+
+	- Tüm tamsayı türleri işaretlidir. (signed)
+
+	- Tamsayı türleri (integer/integral types) için ikiye tümleme yöntemi kullanılır. Java'da işaretsiz tamsayı türü
+	yoktur. Ancak Java 8 ile birlikte belirli koşullar altında işaretsiz tamsayı işlemleri yapılabilmektedir.
+
+	- long en uzun tamsayı türüdür.
+
+	- Gerçek sayı türleri (real/floating point types) için "IEEE 754 standardı" kullanılır. float ve double türleri
+	sırasıyla tek hassasiyetli (single precision) ve çift hassasiyetli (double precision) değerleri tutar. Bu türlerde
+	bazı sayılar tam olarak ifade edilemezler. O sayıya en yakın bir sayı ile ifade edilebilirler. Bir noktalı sayının
+	tam olarak ifade edilemeyip en yakın sayı olarak ifade edilmesine "yuvarlama hatası (rounding error)" denir. Yuvarlama
+	hataları bir değer yerleştirilirken de oluşabilir, bir işlemin sonucunda da oluşabilir.
+
+	- Gerçek sayı türleri işaretli türlerdir.
+
+	- float türünün yuvarlama hatalarına karşı direnci daha zayıftır. Yani yuvarlama hatası daha çok olmaktadır.
+
+	- Yuvarlama hataları parasal ve finansal uygulamalarda hatalı değerlerin oluşmasına sebep olabilir. Parasal
+	ve finansal uygulamalar için tasarlanmış özel türler vardır. Bunlar temel türler değildir. Programcı böylesi
+	uygulamalar için bu türü (sınıfı) tercih eder. Ancak bu sınıflar yuvarlama hatası yapmamak için yüzlerce makine
+	komutu kullanarak bu işlemleri yaparlar. Bu durumda programcı için parasal ve finansal uygulamalar gibi yuvarlama
+	hatasının olmaması gereken durumlar dışında double ya da duruma göre float türü tercih edilmelidir.
+
+	- Yazılar içerisinde her bir karakter aslında bir sayı ile temsil edilir. Hangi karakterin hangi sayı ile ifade
+	edildiği karakter tablosuna bağlıdır. ASCII tablosu 1(bir) byte'lık yani 256 tane satırdan oluşur. UNICODE tablo
+	2 byte'lık yani 65536 tane satırdan oluşur. Karakter tabloları bunlarla sınırlı değildir. Detaylar ileride ele
+	alınacaktır.
+	1 2 3 4 5 6 7 8 9 A B C D E F
+
+	3F -> 0000 0000 -> 0011 1111
+
+	- char türü Java'da UNICODE tablo dikkate alınarak belirlenmiştir. Bu nedenler char türü 2 byte'tır. char türden
+	değişken içeriisnde bir karakterin UNICODE (ya da başka tablodaki) sıra numarası tutulur. UNICODE tablo dünyadaki
+	dillerde kullanılan hemen hemen tüm karakterleri ve bazı özel karakterleri ifade edebilir.
+
+	- boolean türünün alabileceği iki tane değer vardır: true ve false. boolean türünün uzunluğu "Java Language Specification"'da
+	belirtilmemiştir. Sistemden sisteme değişebilir. Ancak bu değişim programcı açısından problem oluşturmaz.
+
+	Anahtar Notlar: int türüne "integer" demek yanlış bir terim kullanmak demektir. integer terimi tamsayılar için
+	kullanılan genel bir terimdir. Ayrıca "Integer" isimli bir sınıf da bulunmaktadır.
+
+	Anahtar Notlar: Java'da en çok kullanılan tamsayı türü int türüdür, en çok kullanılan gerçek sayı türü de double
+	türüdür. Programcı öncelikle bu türleri tercih etmelidir. Eğer geçerli bir neden varsa diğer türleri kullanmalıdır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örneği çalıştırıp yuvarlama hatalarını gözlemleyiniz. Örnekteki detayları şu an önemsemeyiniz. İleride
+	hepsi ele alınacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		double a = 0.1, b = 0.2;
+		double c;
+
+		c = a + b;
+
+		System.out.printf("a = %.20f%n", a);
+		System.out.printf("b = %.20f%n", b);
+		System.out.printf("c = %.20f%n", c);
+
+
+		if (c == 0.3)
+			System.out.println("Eşit");
+		else
+			System.out.println("Eşit değil");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örneği çalıştırıp yuvarlama hatalarını gözlemleyiniz. Örnekteki detayları şu an önemsemeyiniz. İleride
+	hepsi ele alınacaktır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		float a = 0.1F, b = 0.2F;
+		float c;
+
+		c = a + b;
+
+		System.out.printf("a = %.20f%n", a);
+		System.out.printf("b = %.20f%n", b);
+		System.out.printf("c = %.20f%n", c);
+
+
+		if (c == 0.3)
+			System.out.println("Eşit");
+		else
+			System.out.println("Eşit değil");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Bir değişken kullanılmadan önce bildirilmelidir. Değişken bildiriminin genel biçimi:
+		<tür> <değişken ismi>;
+	Örneğin:
+		int a;
+		boolean b;
+		float c;
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Java'da 3 çeşit değişken vardır:
+	1. Yerel değişkenler (local variables)
+	2. Parametre değişkenleri (parameter variables)
+	3. Sınıf veri elemanları (class member variables)
+
+	Değişkenler için temel kavramlar:
+	İsim (name): Belli kurallara göre yazılan karakterler topluluğudur.
+
+	Tür (type): Değişken için bellekte ne kadar yer ayrılacağını ve içerisindeki verinin hangi yöntemle tutulacağını
+	belirtir.
+	1-)Primitive Types
+	2-)user defined types
+	 a-)enums
+	 b-)interfaces
+	Faaliyet alanı (scope): Bir değişken isminin derleyici tarafından görülebildiği kod aralığıdır. Derleme zamanına
+	ilişkindir.
+
+	Ömür (storage duration): Bir değişkenin bellekte kalma süresine denir. Çalışma zamanına ilişkindir.
+
+	Temel bazı kavramlar:
+	Blok (block): Bir metot içerisinde { ve } küme parantezleri arasında kalan kod bölümüdür. Metodun gövdesi de bir bloktur
+
+	İlk değer verme (initialization): Bir değişkene bildirim noktasında verilen değere denir.
+	int a = 10;
+	int b;
+	b = 45;
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Bir metot içerisinde istenildiği kadar ayrık veya içiçe bloklar olabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		{
+			//...
+
+			{
+				//...
+			}
+		}
+
+		{
+			//...
+		}
+
+
+		{
+
+			//...
+			{
+				//...
+			}
+		}
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Bir blok içerisinde herhangi bir yerde bildirilen değişkenlere "yerel değişkenler (local variables)" denir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10; //initialization
+
+		a = 20;
+		{
+			//...
+
+			int b;
+
+			{
+				//...
+			}
+
+			float c;
+		}
+
+		{
+			//...
+		}
+
+		int d;
+
+		{
+
+			//...
+			{
+				//...
+			}
+		}
+	}
+}
+
+class Sample {
+	public static void foo()
+	{
+		int x;
+
+		{
+			double y;
+
+			//...
+		}
+
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aynı türden yerel değişkenler aralarına virgül konarak bildirilebilir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a, b;
+
+		//...
+	}
+}
+
+class Sample {
+	public static void foo()
+	{
+		int x = 10, y = 30, z;
+
+		//...
+
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Yerel bir değişkenin faaliyet alanı bildirildiği yerden bildirildiği bloğun sonuna kadardır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class Sample {
+	public static void foo()
+	{
+		{
+			int x;
+
+			x = 20;
+
+			{
+				x = x + 10;
+				int y = x;
+
+
+				//...
+			}
+
+			y = 23; //error
+		}
+
+		x = 34; //error
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aynı faaliyet alanı içerisinde aynı isimde yerel değişken bildirimi geçersizdir. Farklı faaaliyet alanları içerisinde
+	aynı isimde yerel değişken bildirimi geçerlidir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a, b;
+
+		//...
+	}
+}
+
+class Sample {
+	public static void foo()
+	{
+		int x;
+		double x; //error
+
+		{
+			{
+				int a;
+
+				//...
+
+				{
+					float a; //error
+				}
+			}
+
+			{
+				double a;
+
+				//...
+			}
+		}
+
+		int a;
+	}
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	Yukarıdaki iki kural dolayısıyla aşağıdaki foo ve bar metotlarında x ismi bildirilebilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class Sample {
+	public static void foo()
+	{
+		int x;
+
+		//...
+	}
+
+	public static void bar()
+	{
+		int x;
+
+
+		//...
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	println metodu aldığı karakterleri ekrana bastıktan sonra imleci (cursor) bir sonraki satırın başına çeker. print
+	metodu ise ekrana basma işleminde sonra imleci son yazdığı karakterden sonrasına çeker
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		System.out.println("Hello, World");
+		System.out.print("How are you?");
+		System.out.print("Are you ok?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	print ve println metotları değişkenlerin değerlerini ekrana basarlar
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+		double b = 20;
+
+		System.out.println(a);
+		System.out.println(b);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Java'da değer verilmemiş hiçbir değişken kullanılamaz. Yani içerisindeki değer işleme sokulamaz. Yerel değişkenlere
+	değer verilmesi programcının sorumluluğundadır. Yani değer verilmeden kullanımı error oluşturur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a;
+		int b;
+
+		b = 2 * a; //error
+		System.out.println(a); //error
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Değişkenleri ve diğer değişken atomları isimlendirmek için bir takım kurallar vardır. Bu kurallar aslında tüm
+	 bildirilen isimler için geçerlidir.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Değişken isimleri sayısal bir karakter ile başlatılamaz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int 1number; //error
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Değişken isimleri hehangi bir uygun karakter ile başlatılıp istenildiği kadar sayısal karakter içerebilir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a1234 = 10;
+
+		System.out.println(a1234);
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Değişken isimlendirmede UNICODE alfabetik karakterler geçerlidir. Örneğin Türkçe karakterler kullanılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int öğrencisayısı = 100;
+
+		System.out.println(öğrencisayısı);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Her ne kadar değişken isimlendirmede UNIOCODE karakterler kullanılabilse de programlamada yalnızca
+	İngilizce alfabedeki karakterlerin kullanılması iyi bir tekniktir. Biz de bu "convention"'a uygun kodlar yazacağız
+-----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+	10.09.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+	 Değişken isimlendirmede boşluk (whitespace) karakterler geçersizdir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int number Of Students = 100; //error
+
+	}
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	 Değişken isimleri büyük-küçük harf duyarlıdır (case sensitive). Aslında Java programlama dili sentaks olarak
+	 büyük-küçük harf duyarlıdır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int Number, NuMBer, NUMBER;
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Değişken isimlendirmede _ (alttire, underscore) karakteri kullanılabilir.Hatta değişken ismi _ karakteri ile
+	 başlatılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int _1234 = 20;
+		int _val = 30;
+		int number_of_devices = 34;
+
+		System.out.println(_1234);
+		System.out.println(_val);
+		System.out.println(number_of_devices);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Anahtar Notlar: Programlamada "artık kullanılması tavsiye edilmeyen" durumlar için "deprecated" terimi kullanılır.
+	 Bu durumun gerekçeleri çok çeşitli olabilir. Programcı açısından genel olarak "deprecated" olan bir durum özel bir
+	 takım nedenler yoksa tercih edilmemelidir."
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Java 9 ile birlikte alttire karakterinin tek başına değişken ismi olarak kullanılması geçersizdir. Java 8 ile birlikte
+	deprecated olmuştur.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int _ = 10;
+
+		System.out.println(_);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Java'da değişken isimlendirmede $ karakteri kullanılabilir. Hatta isimler $ karakteri ile başlatılabilir. $ karakteri
+	tek başına değişken ismi olabilir. Ancak programcı açısından değişken isimlendirmede  $ karakteri kullanılmamalıdır.
+	Derleyici ismini kendisinin belirlediği durumlarda isimlendirmede bu karakteri kullanır. $ karakteri bu anlamda
+	programcı tarafından kullanılırsa isim çakışması olabilir. Zaten $ karakterinin varlık sebebi de bu tip kod üretimlerinde
+	kullanılmasıdır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int amountOf$s = 100;
+		int $ = 10;
+		double $1234 = 2.3;
+
+		System.out.println(amountOf$s);
+		System.out.println($);
+		System.out.println($1234);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Anahtar sözcükler tek başına değişken ismi olarak kullanılamaz. Ancak Java'ya daha sonra eklenmiş, yerine göre
+	 anahtar sözcük biçiminde kullanılan bazı atomlar vardır. Bu tarz kullanılan ve sonradan eklenen sözcükler tam anlamıyla
+	 anahtar sözcük değildir. Bu sebeple değişken ismi olarak da kullanılabilir. Kullanıldığı yere göre derleyici değişken
+	 ismi olup olmadığını tespit eder (inference, deduction). Bu tarz anahtar sözcüklere programlamada
+	 "bağlamsal anahtar sözcükler (contextual keywords)" de denir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int class = 10; //error
+		var a = 10;
+		int var = 34;
+
+		//...
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Anahtar Notlar: Değişken isimlerinin kolay telaffuz edilebilir, anlamlı ve yeterince uzunlukta olması gerekir.
+	 statement(deyim)
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Anahtar Notlar: Aşağıda anlatılan, klavyeden temel türden değerler okuma yöntemlerinin detayları ileride ele
+	 alınacaktır. Bu sebeple bunları bir kalıp olarak görüp yalnızca klavyeden okuma kısmı ile ilgileniniz.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Klavyeden int türden değer okunması
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+		int c;
+
+		c = a + b;
+
+		System.out.println(c);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Klavyeden int türden değer okunması
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("İki sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+		int c;
+
+		c = a + b;
+
+		System.out.println(c);
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Klavyeden long türden değer okunması
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayı giriniz:");
+		long a = Long.parseLong(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		long b = Long.parseLong(kb.nextLine());
+		long c;
+
+		c = a + b;
+
+		System.out.println(c);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Klavyeden long türden değer okunması
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("İki sayı giriniz:");
+		long a = kb.nextLong();
+		long b = kb.nextLong();
+		long c;
+
+		c = a + b;
+
+		System.out.println(c);
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Klavyeden double türden değer okunması
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayı giriniz:");
+		double a = Double.parseDouble(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		double b = Double.parseDouble(kb.nextLine());
+		double c;
+
+		c = a + b;
+
+		System.out.println(c);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Klavyeden double türden değer okunması
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("İki sayı giriniz:");
+		double a = kb.nextDouble();
+		double b = kb.nextDouble();
+		double c;
+
+		c = a + b;
+
+		System.out.println(c);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Klavyeden değer okurken girilen yazı ilgili türden bir değere dönüştürülemiyorsa exception oluşur.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	İfade (expression): Sabitlerden, operatörlerden ve değişkenlerden oluşan herhangi bir dizilime denir. Değişkenler
+	ve sabitler tek başına ifade belirtebilir. Operatörler tek başına ifade olamazlar. İstisna bir durum dışında tüm
+	ifadeler hesaplandığında bir değer üretilir. 45.6F 104.7D true + new
+	c = a + b;
+	c = 12;
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	 Bir metodun geri dönüş değeri bilgisi yerine bir tür ismi yazılırsa bu metodun "geri dönüş değeri" vardır denir.
+	 Tersine bir metodun geri dönüş değeri varsa geri dönüş değeri bilgisi yerine bir tür yazılır. Bir metodun geri dönüş
+	 değeri varsa, metot çağrısı bittikten sonra çağrıldığı noktaya bir değer ile geri döner. Bir metodun geri dönüş değeri
+	 yoksa geri dönüş bilgisi yerine void anahtar sözcüğü yazılır. Bir metodun geri dönüş değeri metot içerisinde return
+	 deyimi ile oluşturulur. return deyiminin genel biçimi şu şekildedir:
+
+	 	return [ifade];
+	 	return val % 2 == 0;
+
+	 return deyimi nasıl kullanılırsa kullanılsın metodu sonlandırır. Yani metot içerisinde akış return deyimine
+	 geldiğinde metot sonlanır ve akış çağrılan noktaya geri döner. return deyimine ilişkin ifadenin değeri çağıran
+	 metoda aktarılır. Aşağıdaki örnekte sum metodunun geri dönüş değeri 2 ile çarpılmış ve sonuç result değişkenine
+	 atanmıştır.
