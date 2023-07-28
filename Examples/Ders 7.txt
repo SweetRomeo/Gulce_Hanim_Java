@@ -1,0 +1,765 @@
+/*----------------------------------------------------------------------------------------------------------------------
+aşağıdaki örnekte çok sayıda farklı deyim örneği verilebilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int a = 10; //bildirim deyimi
+        int b = 25;
+        int c;
+        double d;
+        String name;
+        Myclass m = new Myclass();  //bildirim deyimi
+        m.foo(); //basit deyim
+        { //aşağıdaki iki basit deyim bir birleşik deyim oluşturur.
+            c = a + b; //basit deyim
+            System.out.printf("%d",c); //basit deyim
+        }
+    }
+}
+
+class Myclass{
+    public void foo()
+    {
+        System.out.println("foo called");
+    }
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	geri değeri bakımından 2 tip metot vardır bunlar:
+	1-)Geri dönüş değeri metotlar: bu metotlarda
+	geri dönüş değeri yerine void dışında herhangi
+	bir şey olabilir (herhangi primitive type olabilir).
+	Böyle metotlarda return deyiminin bir ifade ile
+	kullanımı zorunludur. Aksi durumda error oluşur.
+	Bu metotlarda kısaca return deyimi kullanımı
+	zorunludur. Aksi durumda error oluşur.
+	2-)Geri dönüş değeri olmayan metotlar: Geri değeri
+	yerinde void anahtar sözcüğü kullanılıyor. Bu metotlarda
+	return tek başına kullanılabilir ancak bunu kullanmak veya
+	kullanmamak tamamen programcıya bağlıdır. Ayrıca bu metotlarda
+	return deyimini bir ifadeyle kullanmak syntax hatasına sebep olur.
+	Yani kısaca ancak tek başına kullanılabilir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+
+    }
+}
+
+class Sample{
+    public static void foo()
+    {
+        return 10;
+    }
+    public static int bar(int val)
+    {
+         return val * val;
+    }
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte return deyimiyle bir geçici değişken oluşturulmuştur. bu geçici değişken de bizim main
+	metotudumuza aktarılmıştır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int result;
+
+		result = Util.sum() * 2;
+		System.out.println(result);
+	}
+
+}
+
+class Util {
+	public static int sum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		return a * a + b * b; //int temp = result
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	11.09.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Java derleyicisi genel olarak bir deyime akışın hiç bir zaman gelemeyeceğini anlarsa o yazılan deyim için error
+	oluşturur (unreachable code/statement). Aşağıdaki örnekte return deyimi metodu sonlandırdığı için error oluşur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App{
+    public static void main(String [] args)
+    {
+        int result = Util.sum();
+        System.out.printf("%d%n",result);
+    }
+}
+class Util {
+    public static int sum()
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.print("Birinci sayıyı giriniz:");
+        int a = Integer.parseInt(kb.nextLine());
+
+        System.out.print("İkinci sayıyı giriniz:");
+        int b = Integer.parseInt(kb.nextLine());
+
+        //int result = a + b;
+
+        return a + b;
+        System.out.println("Unreachable code"); //error
+    }
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Akış return deyimine geldiğinde return deyimine ilişkin ifade önce hesaplanır, elde edilen değer döndürülür
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int result;
+
+		result = Util.sum() * 2;
+		System.out.println(result);
+	}
+}
+
+class Util {
+	public static int sum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		return a + b; //int temp = a + b;
+	}
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	Geri dönüş değeri olan metotlarda return tek başına kullanılamaz.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int result;
+
+        result = Util.sum() * 2;
+        System.out.println(result);
+    }
+}
+class Util {
+    public static int sum()
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.print("Birinci sayıyı giriniz:");
+        int a = Integer.parseInt(kb.nextLine());
+
+        System.out.print("İkinci sayıyı giriniz:");
+        int b = Integer.parseInt(kb.nextLine());
+
+        return; //error
+    }
+}
+
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Geri dönüş değeri olan metotlar akışın her noktasında bir değere dönmelidir. Aksi durumda error oluşur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class Util {
+	public static int sum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Geri dönüş değeri olan metotlar akışın her noktasında bir değere dönmelidir. Aksi durumda error oluşur
+-----------------------------------------------------------------------------------------------------------------------*/
+
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("Bir sayı giriniz");
+        int val = Integer.parseInt(kb.nextLine());
+        Util.isPrime(val);
+    }
+}
+class Util {
+    public static boolean isPrime(int val)
+    {
+        if(val <= 1)
+            return false;
+        //....
+    }
+}
+//------------------------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int result = Util.sum();
+        System.out.printf("result : %d",result);
+    }
+}
+class Util {
+    public static int sum()
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.print("Birinci sayıyı giriniz:");
+        int a = Integer.parseInt(kb.nextLine());
+
+        System.out.print("İkinci sayıyı giriniz:");
+        int b = Integer.parseInt(kb.nextLine());
+
+        int result = a + b;
+
+        if (result > 20)
+            return result * 2;
+        if(result < 100)
+           return 10;
+    }
+}
+
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Derleyici geri dönüş değerinin çağıran metoda aktarımını geçici değişken yaratan bir kod üreterek yapar. Aşağıdaki
+	** ile belirtilen kod parçası için derleyicinin ürettiği temsili kod şu şekildedir:
+
+		int temp = a + b;
+
+		result = temp * 2;
+
+	Yani aslında geri dönüş değeri geçici değişkene yapılan bir atama işlemidir. Geçici değişkenin türü metodun geri
+	dönüş değerinin türü ile aynıdır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int result;
+
+		result = Util.sum() * 2; //**
+		System.out.println(result);
+	}
+}
+
+class Util {
+	public static int sum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		return a + b;
+	}
+}
+
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Derleyici geri dönüş değerinin çağıran metoda aktarımını geçici değişken yaratan bir kod üreterek yapar. Aşağıdaki
+	** ile belirtilen kod parçası için derleyicinin ürettiği temsili kod şu şekildedir:
+
+		int temp = a + b;
+
+		result = temp;
+
+	Yani aslında geri dönüş değeri geçici değişkene yapılan bir atama işlemidir. Geçici değişkenin türü metodun geri
+	dönüş değerinin türü ile aynıdır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int result;
+
+		result = Util.sum(); //**
+		System.out.println(result);
+	}
+}
+
+class Util {
+	public static int sum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		return a + b;
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir metodun geri dönüş değeri başka bir metodun geri dönüş değeri olarak verilebilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int result;
+
+		result = Util.getSum();
+		System.out.println(result);
+	}
+}
+
+class Util {
+	public static int getSum()
+	{
+		System.out.println("Toplama işlemi yapılıyor!...");
+
+		return NumberUtil.sum(); //int temp2 = temp1;
+	}
+}
+
+class NumberUtil {
+	public static int sum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		return a + b; //int temp1 = a + b
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir metodun geri dönüş değeri başka bir metodun geri dönüş değeri olarak verilebilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int result;
+
+        result = Util.getResult(); //result = temp1
+        System.out.println(result);
+    }
+}
+
+class Util {
+    public static int getResult()
+    {
+        System.out.println("İşlemi yapılıyor!...");
+
+        return NumberUtil.sum() * 2; //int temp1 = NumberUtil.sum() * 2;
+        //int temp1 = temp2 * 2;
+    }
+}
+
+class NumberUtil {
+    public static int sum()
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.print("Birinci sayıyı giriniz:");
+        int a = Integer.parseInt(kb.nextLine());
+
+        System.out.print("İkinci sayıyı giriniz:");
+        int b = Integer.parseInt(kb.nextLine());
+
+        return a + b; //int temp2 = a + b
+    }
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Geri dönüş değeri olan metotlar geri dönüş değeri işleme sokulmayacak şekilde çağrılabilirler. Şüphesiz metodun da
+	tasarımı bu kullanım açısından anlamlı olmalıdır. Aşağıdaki örnekte sum metodu klavyeden alınan değerlerin toplamını
+	ekrana basıp aynı zamanda da bu değere geri dönmektedir. Programcı kodda metodun ekrana basılmasıyla ilgilenmiş ve
+	geri dönüş değerini kullanmamıştır. Şüphesiz başka bir senaryoda kullanabilir.
+
+	Metot ekrana toplam değerini basmasaydı bu şekilde çağırma uygun olur muydu? İşimize yarar mıydı?
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		NumberUtil.sum();
+		//code
+	}
+}
+
+class NumberUtil {
+	public static int sum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		int result = a + b;
+
+		System.out.println(result);
+
+		return result;
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	void metotlarda return deyimi zorunluluğu yoktur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		NumberUtil.printSum();
+	}
+}
+
+class NumberUtil {
+	public static void printSum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		int result = a + b;
+
+		System.out.println(result);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	void metotlarda return deyimi istenirse metodu sonlandırmak için tek başına kullanılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		NumberUtil.printSum();
+	}
+}
+
+class NumberUtil {
+	public static void printSum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		int result = a + b;
+
+		if (result < 0)
+			return;
+
+		System.out.println(result);
+	}
+}
+
+
+/*---------------------------------------------------------------------------------------------------------------------
+	void metotlarda return deyimi ifade ile kullanılamaz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		NumberUtil.printSum();
+	}
+}
+
+class NumberUtil {
+	public static void printSum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		int result = a + b;
+
+		System.out.println(result);
+
+		return result; //error
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	void metotlar geri dönüş değeri varmış gibi çağrılamaz. Yani void metot çağrısı geri dönüş değeri varmış gibi
+	işleme sokulamaz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int result = NumberUtil.printSum();	//error
+	}
+}
+
+class NumberUtil {
+	public static void printSum()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Birinci sayıyı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.print("İkinci sayıyı giriniz:");
+		int b = Integer.parseInt(kb.nextLine());
+
+		int result = a + b;
+
+		System.out.println(result);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Metot bildiriminde metot isminden sonra parantezler arasında bildirilen değişkenlere "metot parametre değişkenleri"
+	ya da "parametre değişkenleri" ya da "metodun parametreleri" denir. Bir metodun hiç parametresi olmayabilir ya da
+	teorik olarak istenilen sayıda olabilir. Birden fazla parametresi olan metotların parametreleri virgül ile ayrılır.
+	Metodun parametre değişkenleri faaliyet alanı (scope) bakımından metot başında bildirilen yerel değişkenler gibidir.
+	Dikkat bu cümle faaliyet alanı bakımından aynı olduklarını söylemektedir. Sonuçta yerel değişken ve parametre değişkenleri
+	aynı değildir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.println("Birinci sayıyı giriniz?");
+        int a = Integer.parseInt(kb.nextLine());
+        System.out.println("İkinci sayıyı giriniz?");
+        int b = Integer.parseInt(kb.nextLine());
+        NumberUtil.printSum(a,b);
+    }
+}
+
+class NumberUtil {
+    public static void printSum(int x,int y)
+    {
+        int i = 10;
+        int sum = x * x + y * y + i;
+        System.out.printf("sum : %d%n",sum);
+    }
+}
+//---------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.println("Birinci sayıyı giriniz?");
+        int a = Integer.parseInt(kb.nextLine());
+        System.out.println("İkinci sayıyı giriniz?");
+        int b = Integer.parseInt(kb.nextLine());
+        int result = NumberUtil.sum(a,b);
+        System.out.printf("result : %d%n",result);
+        NumberUtil.printSquare(result);
+    }
+}
+
+class NumberUtil {
+    public static int sum(int a, int b) //NumberUtil.sum(12,34)
+    {
+        return a + b;
+    }
+
+    public static void printSquare(int a)
+    {
+        int result = a * a;
+
+        System.out.println(result);
+    }
+}
+//---------------------------------------------------------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int x = 34;
+        int y = 56;
+        int z = 78;
+        System.out.printf("%d%n",NumberUtil.sum(x,y,z));
+        System.out.printf("%d%n",NumberUtil.calculateSquare(x));
+
+    }
+}
+
+class NumberUtil {
+    public static int sum(int a, int b,int c) //NumberUtil.sum(12,34)
+    {
+        return a + b + c;
+    }
+
+    public static int calculateSquare(int a)
+    {
+        return a * a;
+    }
+}
+//---------------------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int x = 34, y = 56, z = 78;
+        System.out.printf("%d%n",NumberUtil.sum(x,y,z));
+        System.out.printf("%d%n",NumberUtil.calculateSquare(x));
+
+    }
+}
+
+class NumberUtil {
+    public static int sum(int a, int b,int c) //NumberUtil.sum(12,34)
+    {
+        return a + b + c;
+    }
+
+    public static int calculateSquare(int a)
+    {
+        return a * a;
+    }
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	Metodun parametre değişkenlerine değerler metot çağrılırken verilir.  Metot çağrılırken bir parametresine verilen
+	ifadeye "argüman (argument)" denir. Bir metot kaç tane parametreye sahipse o kadar sayıda argüman ile çağrılabilir.
+	Argümanlardan parametrelere aktarım bir atama işlemidir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int x = 34, y = 56;
+        int result = NumberUtil.multi(x,y);
+        System.out.printf("%d%n",result);
+    }
+}
+
+class NumberUtil {
+    public static int multi(int x,int y)
+    {
+        return x * y;
+    }
+}
+//---------------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.print("İki sayı giriniz:");
+        int a = kb.nextInt();
+        int b = kb.nextInt();
+        int result = NumberUtil.sum(a, b); //NumberUtil.sum(12, 74)
+
+        System.out.println(result);// 12 + 74 = 86
+        NumberUtil.printSquare(result);
+        NumberUtil.printSum(a, b);
+    }
+}
+
+class NumberUtil {
+    public static int sum(int a, int b)//int a = 12, int b = 74
+    {
+        return a + b;
+    }
+
+    public static void printSum(int a, int b)//int a = 12, int b = 74
+    {
+        int result = a + b;
+
+        System.out.println(result);
+
+    }
+
+    public static void printSquare(int a)//int a = 86
+    {
+        int result = a * a;
+
+        System.out.println(result);
+    }
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir metodun parametre değişkenleri aynı türden olsa bile tür yazılmalıdır. Aksi durumda error oluşur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class NumberUtil {
+	public static int sum(int a, b) //error
+	{
+	    int a,b;
+		return a + b;
+	}
+}
