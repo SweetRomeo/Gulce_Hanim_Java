@@ -1,0 +1,706 @@
+/*---------------------------------------------------------------------------------------------------------------------
+	Metot çağrısında bir argümana ilişkin ifade önce hesaplanır, elde edilen değer argüman olarak metoda geçilir. Birden
+	fazla parametreye sahip bir metot çağrısında tüm argümanlara ilişkin ifadeler hesaplanır, elde edilen değerler ile
+	metot çağrılır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("İki sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+		int result = NumberUtil.sum(a + 2, b - 8);
+
+		System.out.println(result);
+	}
+}
+
+class NumberUtil {
+	public static int sum(int a, int b)//int a = a + 2
+	{
+		return a + b;
+	}
+
+	//...
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Metot çağrısında bir argümana ilişkin ifade önce hesaplanır, elde edilen değer argüman olarak metoda geçilir. Birden
+	fazla parametreye sahip bir metot çağrısında tüm argümanlara ilişkin ifadeler hesaplanır, elde edilen değerler ile
+	metot çağrılır
+
+	Anahtar Notlar: Aşağıdaki örnekte *** ile belirtilen deyime ilişkin ifadede kullanılan "compact" çözüm gibi kodlar
+	okunabilirliği/algılanabilirliği etkilememelidir. Eğer böyle bir durum varsa ayrı ayrı hesaplanacak şekilde kodlar
+	yazılmalıdır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("İki sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+
+		System.out.println(NumberUtil.sum(a + 2, b - 8)); //***
+	}
+}
+
+class NumberUtil {
+	public static int sum(int a, int b)
+	{
+		return a + b;
+	}
+
+	//...
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	17.09.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte iki sum çağrısı arasında argümanlarda değişiklik olmamasına karşın programcı iki kere çağırmıştır.
+	Bu durumda kod hem iki defa çağırmanın gereksizliği hem de okunabilirlik/algılanabilirlik açısından iyi yazılmamıştır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("İki sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+
+		System.out.println(NumberUtil.sum(a, b));
+
+		//... (Burada a ve b değişkenlerinin değerleri değiştirilmiyor)
+
+		System.out.println(NumberUtil.sum(a, b));
+	}
+}
+
+class NumberUtil {
+	public static int sum(int a, int b)
+	{
+		return a + b;
+	}
+
+	//...
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Yukarıdaki örnek aşağıdaki gibi bir çözümle daha iyi hale getirilebilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("İki sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+
+		int result = NumberUtil.sum(a, b);
+
+		System.out.println(result);
+
+		//... (Burada a ve b değişkenlerinin değerleri değiştirilmiyor)
+
+		System.out.println(result);
+	}
+}
+
+class NumberUtil {
+	public static int sum(int a, int b)
+	{
+		return a + b;
+	}
+
+	//...
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte a değeri değiştiğinden sum metodu yeni a değeri için tekrar çağrılmıştır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("İki sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+
+		System.out.println(NumberUtil.sum(a, b));
+
+		a = a - 3;
+		//...
+
+		System.out.println(NumberUtil.sum(a, b));
+	}
+}
+
+class NumberUtil {
+	public static int sum(int a, int b)
+	{
+		return a + b;//int temp = a + b;
+	}
+
+	//...
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Metotlar ne işe yarar? Ya da başka bir deyişle bir problemin çözümünde neden metotlar yazalım? Bu sorular genel olarak
+	aşağıdaki durumlar ile özetlenebilir:
+
+	- Bir işi çok fazla yerde yapmak kod tekrarına yol açar. Yazılım geliştirmede temel prensip "zorunlu olmadıkça kod tekrarı
+	yapılmamalıdır (do not repeat yourself)" şeklindedir. Bu durumda programcı bir metot yazarak ilgili yerlerde o metodu çağırır.
+
+	- Bir problemin çözümü metot çağırma yerine her yerde kodun yazılması biçiminde "implemente" edilmişse, bu durumda
+	programcı problemin çözümünde bir değişiklik yapmak isterse veya bir hata olduğunu görüp düzeltmek isterse her yerde
+	bu değişiklikleri yapmak zorundadır. Bu da çoğu zaman zor olacaktır.
+
+	- Bir problemin çözümü metot çağırma yerine her yerde kodun yazılması biçiminde "implemente" edilmişse, bu durumda
+	kodun okunabilirliği/algılanabilirliği azalabilir. Yani metot çağırarak kodun okunabilirliği/algılanabilirliği artırılmış
+	olur.
+
+	- Metot yazıldığında başka projelere taşınarak da kullanılabilir (code re-usability).
+
+	- Metodu çağıran programcı metodun nasıl yazıldığına ilişkin detayları bilmek zorunda değildir. Çünkü metodun
+	çağrıldığı noktada metodun nasıl yazıldığının önemi yoktur. Ne yaptığı önemlidir.
+
+	- Bir kod parçasının metot olarak yazılması onun bağımsız olarak test edilip doğrulanması veya varsa hataların
+	düzeltilmesi açısından da önemlidir.
+
+	Anahtar Notlar: İleride ele alacağımız "Nesne Yönelimli Programlama Tekniği (Object Oriented Programming Paradigm)"
+	'ne ilişkin kavramlar ile kodun parçalara ayrılması metotlar dışında daha yüksek seviyede de yapılabilecektir. Yani
+	kabaca bu tarz programlamanın temelinde metotlar vardır.
+-----------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodu ekrana formatlı yazdırmak için kullanılan temel bir metottur. Metodun ilk argümanı bir String olmaldır.
+	Metot bu argüman dışından istenildiği kadar argüman ile çağrılabilir. Metodun birinci parametresine ilişkin yazıda
+	% karakteri ile birlikte geçerli bazı karakterler kullanıldığında "yer tutucu (place holder)" belirtilmiş olur. %
+	ile birlikte kullanıma "format belirleyiciler (format specifiers)" denir. % ile birlikte kullanılan karakterlere ise
+	"format karakterleri (format characters)" denir.  Metot yer tutucular yerine diğer geçilen argümanlara ilişkin değerleri
+	sırasıyla yerleştirir ve ekrana basar. Bazı format karakterleri bir argüman ilişkin değere karşılık gelmez. Bu tarz
+	format karakterlerinin özel anlamları vardır. %d %f %b %s %n %h %x => 0xFFFF
+
+	Anahtar Notlar: printf gibi değişken sayıda argüman alabilen metotlara "vararg methods" denir. Bu metotların nasıl
+	yazılabildiği bu bölümde ele alınmayacaktır.
+
+	Anahtar Notlar: printf metodu ve format karakterleri Java'da önemlidir. printf dışında format karakterlerini printf gibi
+	kullanan başka yararlı metotlar da vardır.
+	%d -> tamsayı türleri(long,int,short,byte)
+	%f -> gerçek sayı türleri(float,double)
+	%x,%h -> hexadecimal yazdırma(16'lık sistem) 1 2 3 ... 9 A B C D E F
+	0x
+	%o -> octal yazdırma(8'lik sistem)
+	%b -> boolean türden yazdırma
+	%c -> char türünden yazdırma
+	%s -> string türünden
+	Anahtar Notlar: Eğer bu türlerden herhangi biri kendisine uygun olmayan bir özel karakterle yazdırılmaya çalışılırsa
+	exception throw edilir.
+-----------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------
+	Tamsayı türlerinin hepsi(char hariç) %d formatı kullanılarak printf metoduyla ekrana basılabilir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        short sVal = 128;
+        int iVal = 4567;
+        byte bVal = 123;
+        long lVal = 2177217;
+        System.out.printf("short value : %d%n",sVal);
+        System.out.printf("int value : %d%n",iVal);
+        System.out.printf("byte value : %d%n",bVal);
+        System.out.printf("long value : %d%n",lVal);
+
+    }
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	Tamsayı türlerinin (short, int, long, byte) decimal formatlanması için d format karakteri kullanılır. printf metodu
+	ile bir sonraki satırın başına geçmek için n format karakteri kullanılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.print("Hava bugün kaç derece?");
+        int today = Integer.parseInt(kb.nextLine());
+        System.out.print("Yarın hava hava kaç derece?");
+        int tomorrow = Integer.parseInt(kb.nextLine());
+
+        System.out.printf("Bugün hava %d derece, yarın %d derece olacakmış%n", today, tomorrow);
+        System.out.println("Tekrar yapıyor musunuz? " + today + " derece,yarın " + tomorrow + " derece olacaktır" );
+    }
+}
+/*---------------------------------------------------------------------------------------------------------------------
+   Aşağıdaki örneği inceleyiniz.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+
+        System.out.printf("%d%n",070);//1
+        System.out.printf("%d%n",090);//2
+        System.out.printf("%d%n",04000);//3
+        System.out.printf("%d%n",010);//4
+    }
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodu ile x, X, h, H karakterleri kullanılarak tamsayı türlerine ilişkin değerler hexadecimal olarak
+	formatlanabilir. Ayrıca o (küçük O) format karakteri ile tamsayı türlerine ilişkin değerler octal olarak formatlanabilir
+	1 2 3 4 5 6 7 8 9 A B C D E F
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("a = %x%n", a);
+		System.out.printf("a = %X%n", a);
+		System.out.printf("a = %h%n", a);
+		System.out.printf("a = %H%n", a);
+		System.out.printf("a = %o%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda tamsayılar için hizalama yapılabilir. Aşağıdaki örnekte %08X yer tutucsu ile yazılan karakter sayısı
+	8'den küçükse kalan karakterler sıfır yazılır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("a = %08X%n", a);
+	}
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda tamsayılar için hizalama yapılabilir. Aşağıdaki örnekte %08X yer tutucsu ile yazılan karakter sayısı
+	8'den küçükse kalan karakterler sıfır yazılır. Hizalamada %'den sonra sıfır yazılmazsa hizalama space karakteri ile
+	yapılır. Şüphesiz aşağıdaki örnek için sıfır ile hizalanması daha uygundur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int a = Integer.parseInt(kb.nextLine());
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("a = %8X%n", a);
+	}
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda tamsayılar için hizalama yapılabilir. Aşağıdaki örnekte tarih bilgisi hizalanarak gösterilmiştir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Gün ay ve yıl bilgilerini giriniz:");
+		int day = kb.nextInt();
+		int month = kb.nextInt();
+		int year = kb.nextInt();
+
+		System.out.printf("%02d/%02d/%04d%n", day, month, year);
+	}
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Tamsayılar için formatlanın diğer ayrıntıları ileride ele alınacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodu ile gerçek sayılar (float ve double) f format karakteri ile formatlanabilir. f format karakteri
+	% ile yalnız başına kullanıldığında sayının noktadan sonraki kısmını "bilimsel yuvarlama" ile yuvarlar
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		double a = kb.nextDouble();
+
+		System.out.printf("a = %.20f%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda f format karakteri ile noktadan sonraki kısmın kaç basamak olarak formatlanacağı aşağıdaki gibi
+	belirlenebilir. Geri kalan basamaklar yine bilimsel olarak yuvarlanır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		double a = kb.nextDouble();
+
+		System.out.printf("a = %f%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Gerçek sayılar için formatlanın diğer ayrıntıları ileride ele alınacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda char türü için c format karakteri kullanılır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		char c = 46567;
+
+		System.out.printf("c = %c%n", c);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda boolean türü için b format karakteri kullanılır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		boolean flag = true;
+
+		System.out.printf("flag = %b%n", flag);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda uygun format karakteri kullanılmadığında genel olarak exception oluşur. Bu durumun istisnaları vardır.
+	Ancak uygun format karakterini kullanmak gerekir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		char c = 46567;
+
+		System.out.printf("c = %d%n", c);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Şüphesiz farklı türler uygun format karakterleri ile aynı printf metodunda kullanılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Numaranızı giriniz:");
+		int number = Integer.parseInt(kb.nextLine());
+
+		System.out.print("Notunuzu giriniz:");
+		double grade = Double.parseDouble(kb.nextLine());
+
+		System.out.printf("Numara: %d%nNot: %f%n", number, grade);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda s format karakteri ile tür ne olursa olsun formatlanabilir. Şüphesiz bu durumda türe özgü
+	biçimler (hizalama vb.) kullanılamaz. Bu format karakterinin ayrıntıları ileride ele alınacaktır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Numaranızı giriniz:");
+		int number = Integer.parseInt(kb.nextLine());
+
+		System.out.print("Notunuzu giriniz:");
+		double grade = Double.parseDouble(kb.nextLine());
+
+		System.out.printf("Numara: %s%nNot: %s%n", number, grade);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda % karakterinden sonra uygun bir format karakter getirilmelidir. Bu durumda % karakteri yazı içerisinde
+	gösterilecekse iki tane % karakteri bitişik olarak kullanılmalıdır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("İndirim yüzdesini giriniz:");
+		int ratio = Integer.parseInt(kb.nextLine());
+
+		System.out.printf("Ürünlerimizde %% %d indirim yapılacaktır%n", ratio);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	printf metodunda % karakterinden sonra uygun bir format karakter getirilmelidir. Bu durumda % karakteri yazı içerisinde
+	gösterilecekse iki tane % karakteri bitişik olarak kullanılmalıdır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("İndirim yüzdesini giriniz:");
+		int ratio = Integer.parseInt(kb.nextLine());
+
+		System.out.printf("Ürünlerimizde %%%d indirim yapılacaktır%n", ratio);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar. printf metodunun format karakterleri ve kullanım biçimleri oldukça geniştir. Burada sadece temel olanlar
+	ele alınmıştır. Diğer format karakterleri ve kullanım biçimleri konular içerisinde ele alınacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Klavyeden girilen 3 tane int türden değerin toplamını ve çarpımını aşağıdaki formatta ekrana
+	basan programı yazınız:
+	Girilen sayılar: 3 4 5 olsun
+
+	  3 + 4 + 5 = 12
+	  3 * 4 * 5 = 60
+	şeklinde ekrana basılacaktır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("a değerini giriniz?");
+        int a = Integer.parseInt(kb.nextLine());
+        System.out.println("b değerini giriniz?");
+        int b = Integer.parseInt(kb.nextLine());
+        System.out.println("c değerini giriniz?");
+        int c = Integer.parseInt(kb.nextLine());
+        Util.printSum(a,b,c);
+        Util.printMulti(a,b,c);
+    }
+}
+
+class Util{
+    public static void printSum(int a,int b,int c)
+    {
+        System.out.printf("%d + %d + %d = %d%n",a,b,c,a + b + c);
+    }
+    public static  void printMulti(int a,int b,int c)
+    {
+        System.out.printf("%d * %d * %d = %d%n",a,b,c,a * b * c);
+    }
+}
+//----------------------------------------------------------------------------------------------------------------
+
+package csd;
+
+class App {
+    public static void main(String[] args) {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("Birinci sayıyı giriniz?");
+        int a = Integer.parseInt(kb.nextLine());
+        System.out.println("İkinci sayıyı giriniz?");
+        int b = Integer.parseInt(kb.nextLine());
+        System.out.println("Üçüncü sayıyı giriniz?");
+        int c = Integer.parseInt(kb.nextLine());
+        System.out.printf("%d + %d + %d = %d%n", a, b, c, a + b + c);
+        System.out.printf("%d * %d * %d = %d%n", a, b, c, a * b * c);
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		FindSumMultiplicationApp.run();
+	}
+}
+
+class FindSumMultiplicationApp {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("3 tane sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+		int c = kb.nextInt();
+
+		System.out.printf("%d + %d + %d = %d%n", a, b, c, a + b + c);
+		System.out.printf("%d * %d * %d = %d%n", a, b, c, a * b * c);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Klavyeden girilen 3 tane int türden değerin toplamını ve çarpımını aşağıdaki formatta ekrana
+	basan programı yazınız:
+	Girilen sayılar: 3 4 5 olsun
+
+	  3 + 4 + 5 = 12
+	  3 * 4 * 5 = 60
+	şeklinde ekrana basılacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		FindSumMultiplicationApp.run();
+	}
+}
+
+
+class FindSumMultiplicationApp {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("3 tane sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+		int c = kb.nextInt();
+
+		System.out.printf("%d + %d + %d = %d%n", a, b, c, NumberUtil.sum(a, b, c));
+		System.out.printf("%d * %d * %d = %d%n", a, b, c, NumberUtil.multiply(a, b, c));
+	}
+}
+
+class NumberUtil {
+	public static int sum(int a, int b, int c)
+	{
+		return a + b + c;
+	}
+
+	public static int multiply(int a, int b, int c)
+	{
+		return a * b * c;
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bölme işlemi tamsayılar ile yapıldığında sonuç her zaman tamsayı türünden çıkar. Elde edilen değerin noktadan sonraki kısmı
+	herhangi bir yuvarlama işlemi yapılmadan atılır. 10 / 3 = 3.33333  10 / 3 = 3
+
+	Tamsayılar ile bölme işleminde paydanın sıfır olması durumunda exception oluşur.
+
+	Bu durumların detayları ileride ele alınacaktır.
+
+	Aşağıdaki örneği çeşitli değerler girerek çalıştırıp sonuçları gözlemleyiniz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("2 tane sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+
+		double result = a / b;
+
+		System.out.printf("%d / %d = %f%n", a, b, result);
+	}
+}
+//-----------------------------------------------------------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("birinci sayıyı giriniz?");
+        int a = Integer.parseInt(kb.nextLine());
+        System.out.println("İkinci sayıyı giriniz?");
+        int b = Integer.parseInt(kb.nextLine());
+        double result = a / b;
+        System.out.printf("result : %f%n",result);
+    }
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	Gerçek sayılar ile bölme işleminde payda sıfır olsa bile işlem yapılıyor. Yani exception oluşmaz. Gerçek sayılar
+	içerisinde genel olarak Matematik'teki "belirsizlik" için kullanılan "Not a Number (NaN)" değeri vardır. Ayrıca
+	genel olarak sonsuzluk (Matematik'teki tanımsızlık) için kullanılan -Infinity ve +Infinity değerleri de vardır.
+	Bu özel değerler dışında da başka özel değerler bulunmaktadır. Bu durumda gerçek sayılar ile bölme işleminde pay
+	sıfırdan farklı, payda sıfır ise payın işaretine göre +Infinity veya -Infinity, pay ve paydanın her ikisi birden
+	sıfır ise NaN sonucu elde edilir.
+
+	Aşağıdaki örneği çeşitli değerler girerek çalıştırıp sonuçları gözlemleyiniz.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("2 tane sayı giriniz:");
+		double a = kb.nextDouble();
+		double b = kb.nextDouble();
+
+		double result = a / b;
+
+		System.out.printf("%f / %f = %f%n", a, b, result);
+	}
+}
