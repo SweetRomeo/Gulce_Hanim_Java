@@ -1,0 +1,1320 @@
+/*---------------------------------------------------------------------------------------------------------------------
+	 Java'da bir grup işlemli atama operatörü vardır. Bu operatörlerin genel biçimi şu şekildedir:
+	 	<ifade1> <op>= <ifade2> ifadesinin
+	 yaklaşık karşılığı
+	 	<ifade1> = <ifade1> <op> <ifade2>
+
+	 Örneğin:
+		 a += b; //a = a + b;
+		 a -= b; //a = a - b;
+		 a *= b; //a = a * b;
+		 a /= b; //a = a / b;
+		 a %= b; //a = a % b;
+
+	İşlemli atama operatörlerinin ürettiği değer yine birinci opeandına atanan değerdir.
+
+	Anahtar Notlar: Aslında işlemli atama operatörlerinin genel biçimi tam olarak yukarıdaki gibi değildir. Bu konu
+	ileride ele alınacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10, b = 20;
+
+		a += b; // a = a + b;
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	İşlemli atama operatörleri ifadeleri daha basit yazmak için tercih edilir. Aşağıdaki örneği inceleyiniz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10, b = 20, c = 30;
+
+		a *= b + c; //a = a * (b + c);
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte aynı seviyede olan *= ve += operatörleri "righ associative" olduğundan işlem sağdan sola doğru
+	yapılır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10, b = 20, c = 30;
+
+		a *= b += c; //a = a * (b = b + c);
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("b = %d%n", b);
+		System.out.printf("c = %d%n", c);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Şüphesiz yukarıdaki örnek aşağıdaki gibi de yapılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10, b = 20, c = 30;
+
+		b += c;
+		a *= b;
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("b = %d%n", b);
+		System.out.printf("c = %d%n", c);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Noktalı virgül sonlandırıcıdır (terminator). Genel olarak ifadeleri ayırmak için kullanılır. Java'da noktalı virgül
+	dışında başka sonlandırıcı karakter yoktur.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;++a;System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Java'da genel olarak etkisiz (code has no effect) ifadeler geçersizdir, error oluşturur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		a + 2; //error
+	}
+}
+
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte error oluşmaz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		Sample.foo();
+	}
+}
+
+class Sample {
+	public static void foo()
+	{
+
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte ++ operatörünün ürettiği değer artırılmamış değer olduğundan a 10 olur. İşlem sırası şu şekildedir:
+	i1: a++
+	i2: a = i1
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		a = a++;
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte ++ operatörünün ürettiği değer artırılmış değer olduğundan a sonuçta 11 olur. Doğrudan ++ uygulandığındaki
+	değerle aynıdır. Bu anlamda aşağıdaki kodd atama işleminin etkisi yoktur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		a = ++a;
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	09.10.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Deyimler (Statements): Bir programın çalıştırılan parçalarına denir. Bir program deyimlerin çalıştırılmasıyla çalışır.
+	Java'da deyimler 5 gruba ayrılır:
+	1. Basit deyimler (simple statements): Bir ifadenin sonuna noktalı virgül konduğunda artık basit deyimdir.
+	++a;
+	a += 4;
+	int a = 45;
+	2. Bileşik deyimler (compound statements): { ve } küme parantezi arasında kalan deyimlere küme parantezleri ile birlikte
+	denir. Yani blok aslında bileşik deyimdir.
+	{
+	deyim1;
+	deyim2;
+	deyim3;
+	}
+	3. Bildirim deyimleri (declaration statements): Bildirime ilişkin deyimlerdir.
+	int a;
+	String town;
+	char ch;
+	Myclass m = new Myclass();//class object
+	4. Kontrol deyimleri (control statements): Akışa yön veren deyimlerdir.
+	return,break,continue,if,for,while,do-while,for-each,switch
+	return val % 2 == 0;
+	5. Boş deyim (null/empty statement): Tek başına noktalı virgüle denir.
+	;
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Bir basit deyim çalıştırıldığında ilgili ifade hesaplanır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int a = 10; //bildirim deyimi
+
+        ++a; //basit deyim
+        System.out.printf("a = %d%n", a); //basit deyim
+    }
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir bileşik deyim çalıştırıldığında ilgili bloğun içerisindeki tüm deyimler çalıştırılır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		{ //Bileşik deyim
+			++a;
+			System.out.printf("a = %d%n", a); //basit deyim
+
+			{
+				//...
+			}
+		}
+	}
+}
+
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir bildirim deyimi çalıştırıldığında bellekte yer ayrılır.(stack bellek)
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10; //Bildirim deyimidir
+		int b; //Bildirim deyimidir
+
+		//...
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Boş deyim çalıştırıldığında hiç bir şey yapılmaz. Boş deyimin kullanıldığı durumlar zamanla ele alınacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a;
+
+		;;;;;;;
+
+
+		;
+
+		;
+		;
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	if deyiminin genel biçimi:
+	1 -> int
+	0 -> int
+	a != 0
+	b >= 34
+	a == 45
+	if (<boolean türden bir ifade>)
+		<deyim>
+	[
+	else
+		<deyim>
+	]
+
+	if deyimi, varsa else kısmı ile birlikte tek bir deyimdir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val % 2 == 0)
+			System.out.println("Çift sayı girdiniz");
+		else
+			System.out.println("Tek sayı girdiniz");
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+//----------------------------------------------------------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+
+        System.out.print("Bir sayı giriniz:");
+        int val = Integer.parseInt(kb.nextLine());
+
+        if (val % 2 == 0)
+            System.out.println("Çift sayı girdiniz");
+        else
+            System.out.println("Tek sayı girdiniz");
+
+        System.out.println("Tekrar yapıyor musunuz?");
+    }
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	if deyiminde bileşik deyim kullanımı
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val % 2 == 0) {
+			System.out.println("Çift sayı girdiniz");
+			val /= 2;
+		}
+		else {
+			val *= 2;
+			System.out.println("Tek sayı girdiniz");
+		}
+
+		System.out.printf("val = %d%n", val);
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+
+/*---------------------------------------------------------------------------------------------------------------------
+	if deyiminde bileşik deyim kullanımı
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val % 2 == 0) {
+			System.out.println("Çift sayı girdiniz");
+			val /= 2;
+		}
+		else
+			System.out.println("Tek sayı girdiniz");
+
+
+		System.out.printf("val = %d%n", val);
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	else kısmı olmayan if deyimi
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val % 2 == 0)
+			val /= 2;
+
+		System.out.printf("val = %d%n", val);
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	if deyiminin parantezinden sonra yanlışlıkla noktalı virgül konması durumu
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val % 2 == 0);
+			val /= 2;
+
+		System.out.printf("val = %d%n", val);
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte else bir if deyimine ait olmadığınmdan error oluşur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val % 2 == 0);
+			val /= 2;
+		else //error
+			val *= 2;
+
+		System.out.printf("val = %d%n", val);
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte else kısmı içteki if deyimine ait olur (dangling else)
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val > 0)
+			if (val % 2 == 0)
+				System.out.println("Pozitif ve çift sayı girdiniz");
+		else
+			System.out.println("Pozitif sayı girmelisiniz!...");
+
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Yukarıdaki "dangling else" durumu bileşik deyim kullanılarak çözülebilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val > 0) {
+			if (val % 2 == 0)
+				System.out.println("Pozitif ve çift sayı girdiniz");
+		    else
+                System.out.println("Pozitif ve tek sayı girdiniz");
+		}
+		else
+			System.out.println("Pozitif sayı girmelisiniz!...");
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte içteki if deyiminin de else kısmı olduğunda "dangling else" oluşmaz ve bileşik deyim kullanılması
+	gerekmez
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val > 0)
+			if (val % 2 == 0)
+				System.out.println("Pozitif ve çift sayı girdiniz");
+			else
+				System.out.println("Pozitif ve tek sayı girdiniz");
+		else
+			System.out.println("Pozitif sayı girmelisiniz!...");
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	if deyiminin  parantezinde boolean türden ifadeler için == ve != operatörleri kullanılması tavsiye edilmez
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		Util.printEvenStatus(val % 2 == 0);
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+
+class Util {
+	public static void printEvenStatus(boolean even)
+	{
+		if (even) //if (even == true)
+			System.out.println("Çift sayı girdiniz");
+		else
+			System.out.println("Tek sayı girdiniz");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	if deyiminin  parantezinde boolean türden ifadeler için == ve != operatörleri kullanılması tavsiye edilmez
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		Util.printEvenStatus(val % 2 == 0);
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+
+class Util {
+	public static void printEvenStatus(boolean even)
+	{
+		if (!even) //if (even == false) ya da if (even != true)
+			System.out.println("Tek sayı girdiniz");
+		else
+			System.out.println("Çift sayı girdiniz");
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte isEven metodunda if deyiminin else kısmına gerek yoktur. Çünkü akış return deyimine geldiğinde
+	metot sonlanır yani isEven içerisinde bir sonraki deyime geçmez. Bu durumda else yazılması iyi bir teknik değildir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		Util.printEvenStatus(NumberUtil.isEven(val));
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+
+class Util {
+	public static void printEvenStatus(boolean even)
+	{
+		if (even)
+			System.out.println("Çift sayı girdiniz");
+		else
+			System.out.println("Tek sayı girdiniz");
+	}
+}
+
+class NumberUtil {
+	public static boolean isEven(int val)
+	{
+		if (val % 2 == 0)
+			return true;
+		else
+			return false;
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Yukarıdaki isEven metodu if deyimi ile aşağıdaki gibi yazılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		Util.printEvenStatus(NumberUtil.isEven(val));
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+
+class Util {
+	public static void printEvenStatus(boolean even)
+	{
+		if (even)
+			System.out.println("Çift sayı girdiniz");
+		else
+			System.out.println("Tek sayı girdiniz");
+	}
+}
+
+class NumberUtil {
+	public static boolean isEven(int val)
+	{
+		if (val % 2 == 0)
+			return true;
+		return false;
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Yukarıdaki isEven metodunun en iyi yazılışı aşağıdaki gibidir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		Util.printEvenStatus(NumberUtil.isEven(val));
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+
+class Util {
+	public static void printEvenStatus(boolean even)
+	{
+		if (even)
+			System.out.println("Çift sayı girdiniz");
+		else
+			System.out.println("Tek sayı girdiniz");
+	}
+}
+
+class NumberUtil {
+	public static boolean isEven(int val)
+	{
+		return val % 2 == 0;
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte geri dönüş değeri boolean olan bir metot çağrısı if deyiminde koşul ifadesi olarak kullanılmıştır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (NumberUtil.isEven(val))
+			System.out.println("Çift sayı girdiniz");
+		else
+			System.out.println("Tek sayı girdiniz");
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static boolean isEven(int val)
+	{
+		return val % 2 == 0;
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örneği inceleyiniz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (!NumberUtil.isEven(val))
+			System.out.println("Tek sayı girdiniz");
+		else
+			System.out.println("Çift sayı girdiniz");
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static boolean isEven(int val)
+	{
+		return val % 2 == 0;
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte isOdd metodu için kod tekrarı yapılmadığına yani işi yapan başka bir metodun çağrıldığına dikkat ediniz.
+	Yazılım geliştirmede "ZORUNLU OLMADIKÇA" kod tekrarı yapılmaması gerekir. Bu kavrama "DO NOT REPEAT YOURSELF" de denir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (NumberUtil.isOdd(val))
+			System.out.println("Tek sayı girdiniz");
+		else
+			System.out.println("Çift sayı girdiniz");
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static boolean isEven(int val)
+	{
+		return val % 2 == 0;
+	}
+
+	public static boolean isOdd(int val)
+	{
+		return !isEven(val);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte ** ile belirtilen if deyimi else kısmı ile birlikte tek bir deyimdir. Bu if deyiminin else kısmında
+	başka bir if deyimi vardır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val > 0) //**
+			System.out.printf("%d sayısı pozitiftir%n", val);
+		else
+			if (val == 0)
+				System.out.println("Sıfır sayısını girdiniz");
+			else
+				System.out.printf("%d sayısı negatiftir%n", val);
+
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Yukarıdaki örnek daha okunabilir/algılanabilir olarak aşağıdaki gibi yazılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val > 0)
+			System.out.printf("%d sayısı pozitiftir%n", val);
+		else if (val == 0)
+			System.out.println("Sıfır sayısını girdiniz");
+		else
+			System.out.printf("%d sayısı nagatiftir%n", val);
+
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki koşullar ayrıktır. Yani biri gerçekleştiğinde diğeri gerçekleşmez. Bu durumda kod doğru çalışsa bile
+	aşağıdaki gibi yazılmamalıdır. else-if biçiminde yazılması (yukarıdaki gibi) hem okunabilir hem de gereksiz kontrollerin
+	engellenmesi açısından önemlidir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val > 0)
+			System.out.printf("%d sayısı pozitiftir%n", val);
+		if (val == 0)
+			System.out.println("Sıfır sayısını girdiniz");
+		if (val < 0)
+			System.out.printf("%d sayısı negatiftir%n", val);
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki koşullar ayrık olmadığından örnek özelinde else-if biçiminde yazılması yanlış olur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		if (val > 11)
+			System.out.println("val > 11");
+		if (val > 6)
+			System.out.println("val > 6");
+		if (val > 10)
+			System.out.println("val > 10");
+
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	15.10.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Katsayıları klavyeden alınan ikinci dereceden bir denklemin köklerini bulup ekrana yazdıran
+	programı yazınız.
+	a*x^2 + b*x + c = 0
+	delta = b * b - 4*a*c
+	Not: İleride daha iyisi yazılacaktır.
+	delta > 0 -> iki tane farklı kök vardır.
+	delta = 0 -> iki tane eşit kök vardır.
+	delta < 0 -> Reel kök yok.
+	x1 = (-b+sqrt(delta))/ (2 * a)
+	x2 = (-b-sqrt(delta)) /(2 * a)
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        Operation.findRootsTest();
+    }
+}
+
+class Operation{
+    public static void findRootsTest()
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("a katsayısını giriniz?");
+        double a = Double.parseDouble(kb.nextLine());
+        System.out.println("b katsayısını giriniz?");
+        double b = Double.parseDouble(kb.nextLine());
+        System.out.println("c katsayısını giriniz");
+        double c = Double.parseDouble(kb.nextLine());
+        findRoots(a,b,c);
+    }
+    public static void findRoots(double a,double b,double c)
+    {
+        double delta = calculateDelta(a,b,c);
+        if(delta > 0){
+            double sqrt_delta = Math.sqrt(delta);
+            double x1 = (-b + sqrt_delta) / (2 * a);
+            double x2 = (-b - sqrt_delta) / (2 * a);
+            System.out.printf("x1 : %f%n",x1);
+            System.out.printf("x2 : %f%n",x2);
+        }
+        else if(delta == 0){
+            double x = -b / (2 * a);
+            System.out.printf("x1 = x2 = %f%n",x);
+        }
+        else {
+            System.out.println("Reel kök yok");
+        }
+
+    }
+    public static double calculateDelta(double a,double b,double c)
+    {
+        return Math.pow(b,2) - 4 * a * c;
+    }
+}
+//----------------------------------------------------------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        CalculateRootsTest.run(new java.util.Scanner(System.in));
+    }
+}
+
+class CalculateRootsTest{
+    public static void run(java.util.Scanner kb)
+    {
+        System.out.println("a katsayısını giriniz?");
+        double a = Double.parseDouble(kb.nextLine());
+        System.out.println("b katsayısını giriniz?");
+        double b = Double.parseDouble(kb.nextLine());
+        System.out.println("c katsayısını giriniz?");
+        double c = Double.parseDouble(kb.nextLine());
+        NumberUtil.CalculateRoots(a,b,c);
+
+    }
+}
+
+class NumberUtil{
+    public static void CalculateRoots(double a,double b,double c)
+    {
+        double delta = CalculateDelta(a,b,c);
+        if(delta > 0){
+            double sqrtDelta = Math.sqrt(delta);
+            double x1 = (-b - sqrtDelta) / (2 * a);
+            double x2 = (-b + sqrtDelta) / (2 * a);
+            System.out.printf("x1 : %f%n",x1);
+            System.out.printf("x2 : %f%n",x2);
+        }
+        else if(delta == 0){
+            double x = -b / (2 * a);
+            System.out.printf("x1 = x2 = %f%n",x);
+        }
+        else{
+            System.out.println("Reel kök yok.");
+        }
+    }
+    public static double CalculateDelta(double a,double b,double c)
+    {
+        return Math.pow(b,2) - 4 * a * c;
+    }
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki koşullar ayrık olmadığından örnek özelinde else-if biçiminde yazılması yanlış olur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("a?");
+        double a = Double.parseDouble(kb.nextLine());
+        System.out.println("b?");
+        double b = Double.parseDouble(kb.nextLine());
+        System.out.println("c?");
+        double c = Double.parseDouble(kb.nextLine());
+        CalculateRoots.run(a,b,c);
+    }
+}
+
+class CalculateRoots{
+    public static void run(double a,double b,double c)
+    {
+        double delta = Math.pow(b,2) - 4 * a * c;
+        if(delta > 0){
+            double sqrt_delta = Math.sqrt(delta);
+            double x1 = (-b + sqrt_delta) / (2 * a);
+            double x2 = (-b - sqrt_delta) / (2 * a);
+            System.out.printf("x1 : %f%n x2 : %f%n",x1,x2);
+        }
+        else if(delta == 0){
+            double x = -b / (2 * a);
+            System.out.printf("x1 = x2 = %f",x);
+        }
+        else{
+            System.out.println("Reel kök yok");
+        }
+    }
+}
+//Başka bir çözüm
+/*----------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki koşullar ayrık olmadığından örnek özelinde else-if biçiminde yazılması yanlış olur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        CalculateRoots.calculateRootsTest();
+    }
+}
+class CalculateRoots{
+    public static void calculateRootsTest()
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("a?");
+        double a = Double.parseDouble(kb.nextLine());
+        System.out.println("b?");
+        double b = Double.parseDouble(kb.nextLine());
+        System.out.println("c?");
+        double c = Double.parseDouble(kb.nextLine());
+        CalculateRoots.run(a,b,c);
+    }
+    public static void run(double a,double b,double c)
+    {
+        double delta = Math.pow(b,2) - 4 * a * c;
+        if(delta > 0){
+            double sqrt_delta = Math.sqrt(delta);
+            double x1 = (-b + sqrt_delta) / (2 * a);
+            double x2 = (-b - sqrt_delta) / (2 * a);
+            System.out.printf("x1 : %f%n x2 : %f%n",x1,x2);
+        }
+        else if(delta == 0){
+            double x = -b / (2 * a);
+            System.out.printf("x1 = x2 = %f",x);
+        }
+        else{
+            System.out.println("Reel kök yok");
+        }
+    }
+}
+//Başka bir çözüm
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		QuadraticEquationSolverApp.run();
+	}
+}
+
+class QuadraticEquationSolverApp {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Katsayıları giriniz:");
+		double a = kb.nextDouble();
+		double b = kb.nextDouble();
+		double c = kb.nextDouble();
+
+		QuadraticEquationSolver.printRoots(a, b, c);
+	}
+}
+
+class QuadraticEquationSolver {
+	public static void doWorkForDifferentRoots(double delta, double a, double b)
+	{
+		double sqrtDelta = Math.sqrt(delta);
+		double x1, x2;
+
+		x1 = (-b + sqrtDelta) / (2 * a);
+		x2 = (-b - sqrtDelta) / (2 * a);
+
+		System.out.printf("x1 = %f, x2 = %f%n", x1, x2);
+	}
+
+	public static void doWorkForSameRoots(double a, double b)
+	{
+		double x = -b / (2 * a);
+
+		System.out.printf("x1 = x2 = %f%n", x);
+	}
+
+	public static double calculateDelta(double a, double b, double c)
+	{
+		return b * b - 4 * a * c;
+	}
+
+	public static void printRoots(double a, double b, double c)
+	{
+		double delta = calculateDelta(a, b, c);
+
+		if (delta > 0)
+			doWorkForDifferentRoots(delta, a, b);
+		else if (delta == 0)
+			doWorkForSameRoots(a, b);
+		else
+			System.out.println("Gerçek kök yok");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Katsayıları klavyeden alınan ikinci dereceden bir denklemin köklerini bulup ekrana yazdıran
+	programı yazınız.
+	Not: İleride daha iyisi yazılacaktır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		QuadraticEquationSolverApp.run();
+	}
+}
+
+class QuadraticEquationSolverApp {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Katsayıları giriniz:");
+		double a = kb.nextDouble();
+		double b = kb.nextDouble();
+		double c = kb.nextDouble();
+
+		QuadraticEquationSolver.printRoots(a, b, c);
+	}
+}
+
+class QuadraticEquationSolver {
+	public static void doWorkForRoots(double delta, double a, double b)
+	{
+		double sqrtDelta = Math.sqrt(delta);
+		double x1, x2;
+
+		x1 = (-b + sqrtDelta) / (2 * a);
+		x2 = (-b - sqrtDelta) / (2 * a);
+
+		System.out.printf("x1 = %f, x2 = %f%n", x1, x2);
+	}
+
+
+	public static double calculateDelta(double a, double b, double c)
+	{
+		return b * b - 4 * a * c;
+	}
+
+	public static void printRoots(double a, double b, double c)
+	{
+		double delta = calculateDelta(a, b, c);
+
+		if (delta >= 0)
+			doWorkForRoots(delta, a, b);
+		else
+			System.out.println("Gerçek kök yok");
+	}
+}
+/*----------------------------------------------------------------------------------------------------------------------
+    for %50 while %40 do-while %10
+	Döngü Deyimleri (Loop Statements):
+	Bir işin yinelemeli olarak yapılması için kullanılan kontrol deyimlerine denir. Java'da döngü deyimleri şunlardır:
+	1. while döngü deyimleri
+		- Kontrolün başta yapıldığı while döngü deyimi (while döngüsü)
+		- Kontrolün sonda yapıldığı while döngü deyimi (do-while deyimi)
+		while(<boolean türden ifade>)// a > b a != b
+		{
+		    //code
+		}
+    do{
+        //code
+    }while(<boolean türden ifade>);
+	2. for döngü deyimi
+
+    for(;;)
+	3. for-each döngü deyimi (enhanced for loop)
+
+	Anahtar Notlar: Bu aşamadan itibaren tüm konular içerisinde "while döngüsü ya da while döngü deyimi" dediğimizde
+	"kontrolün başta yapıldığı while döngü deyimi" anlaşılmalıdır. "Kontrolün sonda yapıldığı while döngü deyimi" için
+	kısaca "do-while döngüsü" ya da "do-while döngü deyimi" diyeceğiz.
+	%10 do-while
+	%40 while
+	%50 for deyimi
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Kontrolün başta yapıldığı while döngü deyiminin genel biçimi:
+
+	while (<koşul ifadesi>)
+		<deyim>
+
+	Koşul ifadesi boolean türden olmalıdır. Bu döngü koşul ifadesi true olduğu sürece yinelenir. Akış while döngüsüne
+	geldiğinde koşul kontrolü yapılır ve koşul gerçeklenmesze yani true değeri üretilmezse döngüye girilmez.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = 0;
+
+		while (i < n) {
+			System.out.printf("%d ", i);
+			++i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsü ile n-kez dönen döngü
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = 0;
+
+		while (i < n) {
+			System.out.printf("%d ", i);
+			++i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsü ile n-kez dönen döngü
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = 1;
+
+		while (i <= n) {
+			System.out.printf("%d ", i);
+			++i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsü ile n-kez dönen döngü
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = n - 1;
+
+		while (i >= 0) {
+			System.out.printf("%d ", i);
+			--i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
