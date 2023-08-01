@@ -1,0 +1,761 @@
+/*---------------------------------------------------------------------------------------------------------------------
+	Ters bölü u karakteri ile bir karakterin sıra numarası hexadecimal olarak tek tırnak içerisinde yazıldığında
+	o karaktere karaktere ilişkin karakter sabiti yazılmış olur. Burada hexadecimal sayı kesinlikle iki byte olarak
+	yani 4 tane hex digit olarak yazılmalıdır. Aksi durumda error oluşur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		char c = '\u00C6';
+
+		System.out.println(c);
+	}
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	Ters bölü u karakteri ile yazılan karakter sabitleri "string literal" içerisinde de kullanılabilir.
+	Otomotiv
+	Banka
+	Gömülü Yazılım -> ip tv,stm32,savunma sanayi, pos makineleri(Hugin)
+
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		System.out.println("ab\u00C6def");
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Ters bölü u ile yazılan karakterler değişken isimlendirmede kullanılabilir. Şüphesiz pratik değildir. Örnek
+	durumu anlatmak için yazılmıştır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int \u0041\u0042\u00C6 = 10;
+
+		System.out.println(AB\u00C6);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir tamsayı sabitinin öneki yoksa bu durumda sabit "decimal" olarak ele alınır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		System.out.println(a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir tamsayı sabitinin önüne bitişik olarak sıfır ve x (büyük veya küçük) yazıldığında bu ekten sonra gelen basamaklar
+	"hexadecimal" olarak ele alınır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 0xA;//1010
+
+		System.out.println(a);
+	}
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir tamsayı sabitinin önüne bitişik olarak sıfır yazıldığında bu ekten sonra gelen basamaklar "octal" olarak ele alınır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 012;
+
+		System.out.println(a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Bir tamsayı sabitinin önüne bitişik olarak sıfır ve b (büyük veya küçük) yazıldığında bu ekten sonra gelen basamaklar
+	"binary" olarak ele alınır. İkilik sistemde yazılan sabitler Java 7 ile eklenmiştir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 0b1010; //Since Java 7
+
+		System.out.println(a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte DeviceUtil sınıfının out metou 16 tane pini olan bir elektronik devre için aldığı argüman değerine
+	göre, değerin bit'lerine karşılık gelen pinleri 1 ya da sıfır için "high" ya da "low" seviyeye çekiyor olsun. Bu durumda
+	böyle bir metodun alacağı sabit argümanın "binary" veya hexadecimal olarak yazılması okunabilirliği artırır. Ayrıca
+	yazım kolaylığı da sağlar. Aşağıdaki demo örneği anlatılan senaryoya göre düşününüz.
+	F    F
+	1111 1111
+	E    F
+	1110 1111
+	A    A
+	1010 1010
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		short value = 0b10101;
+
+		DeviceUtil.out(value);
+
+		value = 0x15;
+
+		DeviceUtil.out(value);
+	}
+}
+
+
+class DeviceUtil {
+	public static void out(short value)
+	{
+		System.out.printf("value = %04X%n", value);
+		//...
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	 Gerçek sayıların üstel gösterilişi (bilimsel gösterilişi)
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		double a = 1.3E2;
+		double b = 1.3e2;
+		double c = 1.4E-2;
+		double d = 1.4e-2;
+
+		System.out.printf("a = %f%n", a);
+		System.out.printf("b = %f%n", b);
+		System.out.printf("c = %f%n", c);
+		System.out.printf("d = %f%n", d);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Java 7 ile birlikte tamsayı ve gerçek sayı sabitlerinin basamakları arasında alttire karakteri kullanılabilmektedir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 0x00_FA_BC_D0;
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("a = %X%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Java 7 ile birlikte tamsayı ve gerçek sayı sabitlerinin basamakları arasında alttire karakteri kullanılabilmektedir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		double a = 56_789.3_456_789;
+
+		System.out.printf("a = %f%n", a);
+
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Alttire karakteri kullanılabildiği yerde istenildiği sayıda kullanılabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 1_________________________________________0;
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Java 7 ile birlikte tamsayı ve gerçek sayı sabitlerinin basamakları arasında alttire karakteri kullanılabilmektedir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		long a = 5_678_290_123L;
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("a = %X%n", a);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Alttire kullanımı genel olarak sadece basamaklar arasında geçerlidir. Aksi durumda error oluşur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		long a = _5_678_290_123L; //error
+		int b = 0x_1FC0; //error
+		int c = 0x1FC0_; //error
+		double d = 123_.345; //error
+		long e = 5_678_290_123L_; //error
+
+
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Octal sabitler için sıfır öneki ile sabit arasında alttire kullanımı geçerlidir. Bu bir istisna durumdur.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 0_12;
+
+		System.out.println(a);
+	}
+}
+/*----------------------------------------------------------------------------------------------------------------------
+    Soru: Aşağıdaki programın ekran çıktısı ne olur.(Huawei mülakat sorusu)
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        int x = 090;
+        System.out.printf("%d",x);
+    }
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Alttire kullanımı okunabilirliği/algınabililiği artırmak için tercih edilir. Şüphesiz bu tercih
+	anlamlı kullanılmalıdır. Anlamsız kullanımı okunabilirliği/algılanabilirliği azaltır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	 Gerçek sayı sabitlerinin tamsayı kısmının değeri sıfır ise noktadan önce sıfır yazılmayabilir. Benzer şekilde
+	 sayının noktadan sonraki kısmının değeri sıfır ise yine sıfır noktadan sonra yazılmayabilir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		double a, b;
+
+		a = .3;
+		b = 3.;
+
+		System.out.printf("a = %f%n", a);
+		System.out.printf("b = %f%n", b);
+
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Yalnızca sabitlerden ve operatörlerden oluşan yani içerisinde değişken olmayan ifadelere "sabit ifadesi (constant expression)"
+	denir. Bu anlamda bir sabit de tek başına bir sabit ifadesidir.
+
+	Anahtar Notlar: İleride aslında sabit ifadesi olarak kullanılabilen değişkenler de göreceğiz. Bu tarz değişkenler de
+	bir ifade içerisinde sabit olarak ele alınır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	01.10.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Derleyiciler sabit ifadelerinin değerlerini hesaplayarak sonucu "byte code"'a yazarlar. Bu optimizasyona
+	"constant folding optimization" denir. Bu sebeple 1000L * 60 * 60 * 24 * 365 ifadesinin değeri byte code'a
+	31536000000 olarak yazılır. Aşağıdaki örnekte bilgi kaybı olmaması için 1000 sabiti long olarak yazılmıştır. Bu konu
+	ileride ele alınacaktır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		long divider = 1000L * 60 * 60 * 24 * 365; //byte code karşılığı -> long divider = 31536000000L;
+
+		System.out.println(divider);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Operatörler: Bir işleme yol açan ve işlem sonucunda bir değer üreten atomlara operatör denir. Operatör ile birlikte
+	işleme giren ifadelere "operand" denir.
+
+	Operatörler 3 biçimde sınıflandırılabilir:
+	1. İşlevlerine göre sınıflandırma
+		- Aritmetik (arithmetic) operatörler(* / % + -)
+		- Karşılaştırma (comparison) operatörleri(<= >= == != < > )
+		- Mantıksal (logical) operatörler(&& || !)
+		- Bitsel (bitwise) operatörler(& | ^  << >> ~)
+		int a = 10; // a = 1010;
+		>> 2//0010
+		- Özel amaçlı (special purpose) operatörler(instanceof)
+
+	2. Operand sayısına göre sınıflandırma
+		- Tek operandlı (unary) -a
+		- İki operandlı (binary) a || b, a + b, a - b
+		- Üç operandlı (ternary) <ifade1> ? <ifade2> : <ifade3>
+	3. Operatörün konumuna göre sınıflandırma
+		- önek (prefix)(++ --)
+		- araek (infix)(!= == >= <= < >)
+		- sonek (postfix)(++ --) a++ , b++
+
+	Operatörün kısıtı (constraint)
+	Operatörün ürettiği değer (product value)
+	Operatörün yan etkisi (side effect) var mı? Operatör operand ya da operandlarının değerini değiştiriyor mu?
+	Operatörün önceliği (precedence):
+	a = b + c * d ifadesinin derleyicinin ürettiği kodda yapılma sırası şu şekildedir:
+
+	i1: c * d
+	i2: b + i1
+	i3: a = i2
+
+	a = (b + c) * d ifadesinin derleyicinin ürettiği kodda yapılma sırası şu şekildedir:
+
+	i1: b + c
+	i2: i1 * d
+	i3: a = i2
+
+	Anahtar Notlar: Java programcısı bir operatör için yukarıdaki durumları bilmelidir. Yani bir operatörün öğrenilmesi
+	o operatör için yukarıdaki durumların bilinmesi anlamına gelir.
+
+	Anahtar Notlar: Bazı operatörler öncelik kurallarına doğrudan uymazlar. Bu tarz operatörlerin de uymadıkları durum
+	için nasıl çalıştığının bilinmesi gerekir. Bu operatörlerin öncelik kurallarına doğrudan uymamalarının da
+	"gerekçeleri (rationale)" vardır.
+
+	Anahtar Notlar: Operatör öncelik tablosu gruplandırma olarak düşünülebilir. Yani öncelik tablosundaki durumların
+	istisnaları olabilir. Şüphesiz bunlarında bilinmesi gerekir. Operatör öncelik tablosu algısal bakımdan kolaylaştırmak
+	için vardır.
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------------------------------------------------------
+	Aritmetik 4 işlem ve mod operatörleri iki operandlı (binary) ve araek (infix) operatörlerdir. Bu operatörlerin
+	ürettikleri değer (product value) işlem sonucunda elde edilen değerdir. Bu operatörlerin yan etkisi (side effect) yoktur.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("İki tane sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+
+		System.out.printf("%d + %d = %d%n", a, b, a + b);
+		System.out.printf("%d * %d = %d%n", a, b, a * b);
+		System.out.printf("%d - %d = %d%n", a, b, a - b);
+		System.out.printf("%d / %d = %d%n", a, b, a / b);
+		System.out.printf("%d %% %d = %d%n", a, b, a % b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Mod operatörünün birinci operandı negatif ise sonuç negatif çıkar. İkinci operandının negatif olmasının bir önemi
+	yoktur. Başka bir deyişle mod operatörünün sonucunun işareti birinci operandının işareti ile aynıdır. Adeta birinci
+	operandının mutlak değeri ile işlem yapılır ve birinci operandın işareti sonucun işaretini belirler
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("İki tane sayı giriniz:");
+		int a = kb.nextInt();
+		int b = kb.nextInt();
+
+		System.out.printf("%d %% %d = %d%n", a, b, a % b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Anahtar Notlar: Aynı seviyedeki operatörler işleme sokulduğunda genel olarak o seviyedeki operatörlerin hangi
+	sırada işleme girdiğine "ilişkisi (associativity)" denir. Bazı operatörler "soldan sağa (left associative)", bazı
+	operatörler "sağdan sola (right associative)" işleme girerler.
+-----------------------------------------------------------------------------------------------------------------------*/
+ a = b / c * d;
+ i1 : x = b / c
+ i2 : y = x * d
+ i3 : a = y
+/*---------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Parametresi ile aldığı en fazla 3 basamaklı int türden bir sayının basamakları toplamına geri
+	dönen digitsSum isimli metodu NumberUtil sınıfı içerisinde yazınız ve aşağıdaki kod test ediniz.
+
+	Açıklamalar:
+		- Metot aldığı argümana ilişkin değerin 3 basamaktan fazla olup olmama kontrolünü yapmayacaktır
+		- Basamakları toplamı pozitif olarak döndürülecektir.
+		abc 123 / 10 = 12
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        digitsSumTest.run(new java.util.Scanner(System.in));
+    }
+}
+
+class digitsSumTest{
+    public static void run(java.util.Scanner kb)
+    {
+        System.out.println("Üç basamaklı bir sayı giriniz?");
+        int val = Integer.parseInt(kb.nextLine());
+        System.out.printf("%d",NumberUtil.digitsSum(val));
+    }
+}
+
+class NumberUtil{
+    public static int digitsSum(int val)
+    {
+        int ones = val % 10;
+        int tens = val / 10 % 10;
+        int hundreds = val / 100;
+        return Math.abs(ones + tens + hundreds);
+    }
+}
+//---------------------------------------------------------------------------------------------------------------------
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		DigitsSumTest.run();
+	}
+}
+
+class DigitsSumTest {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int val = kb.nextInt();
+
+		System.out.printf("%d sayısının basamakları toplamı: %d%n", val, NumberUtil.digitsSum(val));
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static int digitsSum(int val)
+	{
+		int a, b, c;
+
+		a = val / 100;
+		b = val / 10 % 10; //val % 100 / 10;
+		c = val % 10;
+
+		return Math.abs(a + b + c);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	İşaret - operatörü tek operandlı (unary) ve önek (prefix) durumunda bir operatördür. Operatörün yan etkisi yoktur.
+	Ürettiği değer operandının ters işaretlisidir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int a = kb.nextInt();
+		int b;
+
+		b = -a;
+
+		System.out.printf("a = %d, b = %d%n", a, b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	İşaret + operatörü tek operandlı (unary) ve önek (prefix) durumunda bir operatördür. Operatörün yan etkisi yoktur.
+	Ürettiği değer operandının değeridir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int a = kb.nextInt();
+		int b;
+
+		b = +a;
+
+		System.out.printf("a = %d, b = %d%n", a, b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte ifade işaret - operatörünün sevisende bulunan operatörlerin sağdan sola (right associative) ele
+	alınmasından dolayı geçerlidir. Programı çalıştırarak sonucu gözlemleyiniz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int a = kb.nextInt();
+		int b;
+
+		b = a - - - - - - - - - - - - 2;
+
+		System.out.printf("a = %d, b = %d%n", a, b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnek geçerlidir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a;
+
+		a = - - - - - - - - - - - - 2;
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+++ operatörü tek operandlı ve hem prefix hem de postfix olarak kullanılabilen bir operatördür. Bu operatör ister
+prefix ister postfix olarak kullanılsın operandına ilişkin değeri bir artırır. Yani operandının içerisindeki değerin
+1 fazlası ile değiştirir. Bu operatörün operandının değişken olması zorunludur.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		++a; //a = a + 1;
+		a++;// a += 1;
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	++ operatörü tek operandlı ve hem prefix hem de postfix olarak kullanılabilen bir operatördür. Bu operatör ister
+	prefix ister postfix olarak kullanılsın operandına ilişkin değeri bir artırır. Yani operandının içerisindeki değerin
+	1 fazlası ile değiştirir. Bu operatörün operandının değişken olması zorunludur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		a++; //a = a + 1;
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	++ operatörünün prefix kullanımında ürettiği değer yani işleme giren değer artırılmış değerdir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10, b;
+
+		b = ++a;
+
+		System.out.printf("a = %d, b = %d%n", a, b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	++ operatörünün postfix kullanımında ürettiği değer yani işleme giren değer artırılMAmış değerdir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10, b;
+
+		b = a++;
+
+		System.out.printf("a = %d, b = %d%n", a, b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	-- operatörü tek operandlı ve hem prefix hem de postfix olarak kullanılabilen bir operatördür. Bu operatör ister
+	prefix ister postfix olarak kullanılsın operandına ilişkin değeri bir azaltır. Yani operandının içerisindeki değerin
+	1 eksiği ile değiştirir. Bu operatörün operandının değişken olması zorunludur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		--a; //a = a - 1;
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	-- operatörü tek operandlı ve hem prefix hem de postfix olarak kullanılabilen bir operatördür. Bu operatör ister
+	prefix ister postfix olarak kullanılsın operandına ilişkin değeri bir azaltır. Yani operandının içerisindeki değerin
+	1 eksiği ile değiştirir. Bu operatörün operandının değişken olması zorunludur
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10;
+
+		a--; //a = a - 1; a -= 1
+
+		System.out.printf("a = %d%n", a);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	-- operatörünün prefix kullanımında ürettiği değer yani işleme giren değer azaltılmış değerdir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10, b;
+
+		b = --a;
+
+		System.out.printf("a = %d, b = %d%n", a, b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	-- operatörünün postfix kullanımında ürettiği değer yani işleme giren değer azaltılMAmış değerdir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a = 10, b;
+
+		b = a--;
+
+		System.out.printf("a = %d, b = %d%n", a, b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	02.10.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte ++ ve -- operatörleri ve operandları aynı ifadede kullanılmıştır. Bu tarz ifadelerde
+	okunabilirliğe/algılanabilirliğe dikkat edilmelidir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a, b;
+
+		a = 10;
+
+		b = a++ + a--;
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("b = %d%n", b);
+	}
+}
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte ++ ve -- operatörleri ve operandları aynı ifadede kullanılmıştır. Bu tarz ifadelerde
+	okunabilirliğe/algılanabilirliğe dikkat edilmelidir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a, b;
+
+		a = 10;
+
+		b = ++a + a--;
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("b = %d%n", b);
+	}
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+	Aşağıdaki örnekte ++ ve -- operatörleri ve operandları aynı ifadede kullanılmıştır. Bu tarz ifadelerde
+	okunabilirliğe/algılanabilirliğe dikkat edilmelidir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		int a, b;
+
+		a = 2;
+
+		b = a-- + ++a * a;
+
+		System.out.printf("a = %d%n", a);
+		System.out.printf("b = %d%n", b);
+	}
+}
