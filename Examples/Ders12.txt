@@ -1,0 +1,804 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    for %50 while %40 do-while %10
+	Döngü Deyimleri (Loop Statements):
+	Bir işin yinelemeli olarak yapılması için kullanılan kontrol deyimlerine denir. Java'da döngü deyimleri şunlardır:
+	1. while döngü deyimleri
+		- Kontrolün başta yapıldığı while döngü deyimi (while döngüsü)
+		- Kontrolün sonda yapıldığı while döngü deyimi (do-while deyimi)
+		while(<boolean türden ifade>)// a > b a != b
+		{
+		    //code
+		}
+    do{
+        //code
+    }while(<boolean türden ifade>);
+	2. for döngü deyimi
+
+    for(;;)
+	3. for-each döngü deyimi (enhanced for loop)
+
+	Anahtar Notlar: Bu aşamadan itibaren tüm konular içerisinde "while döngüsü ya da while döngü deyimi" dediğimizde
+	"kontrolün başta yapıldığı while döngü deyimi" anlaşılmalıdır. "Kontrolün sonda yapıldığı while döngü deyimi" için
+	kısaca "do-while döngüsü" ya da "do-while döngü deyimi" diyeceğiz.
+	%10 do-while
+	%40 while
+	%50 for deyimi
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Kontrolün başta yapıldığı while döngü deyiminin genel biçimi:
+
+	while (<koşul ifadesi>)
+		<deyim>
+
+	Koşul ifadesi boolean türden olmalıdır. Bu döngü koşul ifadesi true olduğu sürece yinelenir. Akış while döngüsüne
+	geldiğinde koşul kontrolü yapılır ve koşul gerçeklenmesze yani true değeri üretilmezse döngüye girilmez.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = 0;
+
+		while (i < n) {
+			System.out.printf("%d ", i);
+			++i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsü ile n-kez dönen döngü
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = 0;
+
+		while (i < n) {
+			System.out.printf("%d ", i);
+			++i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsü ile n-kez dönen döngü
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = 1;
+
+		while (i <= n) {
+			System.out.printf("%d ", i);
+			++i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsü ile n-kez dönen döngü
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = n - 1;
+
+		while (i >= 0) {
+			System.out.printf("%d ", i);
+			--i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsü ile n-kez dönen döngü
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = n;
+
+		while (i >= 1) {
+			System.out.printf("%d ", i);
+			--i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsü ile n-kez dönen döngü:
+
+	Örneğin n = 4 olsun
+	Koşul kontrolleri							: 4 > 0 -> 3 > 0 -> 2 > 0 -> 1 > 0 -> 0 > 0
+	Döngü içerisinde her adımda n'nin değeri	: 3 -> 2 -> 1 -> 0
+	Sayaç									 	: 1 -> 2 -> 3 -> 4
+	Döngü sonrası n'nin değeri					: -1
+
+	Bu döngüde n-nin değerinin döngünün her adımında değiştiğine, dolayısıyla döngü sonrasında döngü öncesindeki değerin
+	kaybedildiğine dikkat ediniz. Bu döngü kullanılacaksa ve döngüden sonra n-nin eski değerine ihtiyaç olacaksa döngü
+	öncesinde n-nin değeri saklanmalıdır. Bu kalıbın kullanılacağı zorunlu durumlar yoktur. Ancak bazı programcılar bu
+	kalıbı kullanabilirler. Böyle bir kodun anlaşılmas açısında bu kalıp bilinmelidir.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+
+		while (n-- > 0)
+			System.out.printf("%d ", n);
+
+		System.out.println();
+		System.out.printf("Döngü sonrası n = %d%n", n);
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngü deyiminde yanlışlıkla noktalı virgül konması durumu
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int n = kb.nextInt();
+		int i = 0;
+
+		while (i < n); {
+			System.out.printf("%d ", i);
+			++i;
+		}
+
+		System.out.println();
+		System.out.printf("Döngü sonrası i = %d%n", i);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsünün parantezi içerisinde bir değişkene bir metodun geri dönüş değerinin atanıp, atanan değerin kontrolüne
+	ilişkin algoritmalar yazılabilmektedir. Okunabilirliği/algılanabilirliği etkilemediği sürece aşağıdaki gibi while
+	döngüleri yazılabilir.
+
+	Aşağıdaki örnekte klavyeden sıfır girilen akadar alınan sayıların toplamı bulunmuştıor. while döngüsünün parantezi
+	içerisindeki atama işlemine programcı tarafından öncelik verildiğine dikkat ediniz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.println("Sayıları girmeya başlayınız:");
+
+		int sum = 0;
+		int a;
+
+
+		System.out.print("Bir sayı giriniz:");
+		while ((a = Integer.parseInt(kb.nextLine())) != 0) {
+			sum += a;
+			System.out.print("Bir sayı giriniz:");
+		}
+
+		System.out.printf("Toplam: %d%n", sum);
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsünün parantezi içerisinde bir değişkene bir metodun geri dönüş değerinin atanıp, atanan değerin kontrolüne
+	ilişkin algoritmalar yazılabilmektedir. Okunabilirliği/algılanabilirliği etkilemediği sürece aşağıdaki gibi while
+	döngüleri yazılabilir.
+
+	Aşağıdaki örnekte klavyeden sıfır girilen akadar alınan sayıların toplamı bulunmuştıor. while döngüsünün parantezi
+	içerisindeki atama işlemine programcı tarafından öncelik verildiğine dikkat ediniz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.println("Sayıları girmeya başlayınız:");
+
+		int sum = 0;
+		int a;
+
+
+		while ((a = kb.nextInt()) != 0)
+			sum += a;
+
+		System.out.printf("Toplam: %d%n", sum);
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	while döngüsünün parantezi içerisinden değişken bildirimi geçersizdir
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.println("Sayıları girmeya başlayınız:");
+
+		int sum = 0;
+
+		while ((int a = kb.nextInt()) != 0) //error
+			sum += a;
+
+		System.out.printf("Toplam: %d%n", sum);
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Klavyeden sıfır girilene kadar alınan sayıların pozitif ve negatif olanlarının ayrı ayrı toplamını ve
+	pozitif ve negatif olanlarından kaçar tane girildiğini bulan ve ekrana uygun mesajları yazdıran programı yazınız
+	Açıklamalar:
+		- Hiç pozitif sayı ve/veya negatif girilmemişse, sayıların girilmediğine ilişkin mesajlar verilecektir. Örneğin:
+		Hiç pozitif sayı girmediniz!...
+		- Mesajları dilediğiniz gibi verebilirsiniz
+		- Her adımda sayı isteme mesajı verilecektir. Örneğin: Bir sayı giriniz:
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        printNumbersTest.run(new java.util.Scanner(System.in));
+
+    }
+}
+
+class printNumbersTest{
+    public static void run(java.util.Scanner kb)
+    {
+        System.out.println("Sayıları girmeye başlayınız");
+        int val;
+        int negSum = 0,negCount = 0,posSum = 0,posCount = 0;
+        System.out.println("Bir sayı giriniz?");
+        while((val = Integer.parseInt(kb.nextLine())) != 0){
+            if(val > 0) {
+                posCount++;
+                posSum += val;
+            }
+            else{
+                negCount++;
+                negSum += val;
+            }
+            System.out.println("Bir sayı giriniz?");
+        }
+        NumberUtil.printNumbers(posCount,posSum,negCount,negSum);
+
+
+    }
+}
+
+class NumberUtil{
+    public static void printNumbers(int posCount,int posSum,int negCount,int negSum)
+    {
+        printNegatives(negCount,negSum);
+        printPositives(posCount, posSum);
+    }
+    public static void printNegatives(int negCount,int negSum)
+    {
+        if(negCount == 0)
+        {
+            System.out.println("Hiç negatif sayı girmediniz!");
+        }
+        else
+        {
+            System.out.printf("%d tane negatif sayı girildi toplamları : %d%n",negCount,negSum);
+        }
+    }
+    public static void printPositives(int posCount,int posSum)
+    {
+        if(posCount == 0)
+        {
+            System.out.println("Hiç pozitif sayı girmediniz!");
+        }
+        else
+        {
+            System.out.printf("%d tane pozitif sayı girdiniz toplamları : %d%n",posCount,posSum);
+        }
+    }
+}
+//------------------------------------------------------------------------------
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        Operation.printNumbers(new java.util.Scanner(System.in));
+    }
+}
+
+class Operation{
+    public static void printNumbers(java.util.Scanner kb)
+    {
+        System.out.println("Sayıları girmeye başlayınız");
+        int val;
+        int posSum = 0, posCount = 0;
+        int negSum = 0,negCount = 0;
+
+        while((val = Integer.parseInt(kb.nextLine()))!= 0){
+            if(val > 0){
+                posSum += val;
+                posCount++;
+            }
+            else{
+                negSum += val;
+                negCount++;
+            }
+        }
+        printNegatives(negSum,negCount);
+        printPositives(posSum,posCount);
+    }
+    public static void printNegatives(int negSum,int negCount)
+    {
+        if(negCount == 0){
+            System.out.println("Hiç negatif sayı girmediniz!");
+        }
+        else {
+            System.out.printf("%d tane negatif sayı girildi toplamları : %d%n",negCount,negSum);
+        }
+    }
+    public static void printPositives(int posSum,int posCount)
+    {
+        if(posCount == 0){
+            System.out.println("Hiç pozitif sayı girmediniz!");
+        }
+        else {
+            System.out.printf("%d tane pozitif sayı girildi toplamları : %d%n",posCount,posSum);
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		FindPosNegSumCountsApp.run();
+	}
+}
+
+class FindPosNegSumCountsApp {
+	public static void printPositivesResult(int posSum, int posCount)
+	{
+		if (posCount != 0)
+			System.out.printf("%d tane pozitif sayının toplamı:%d%n", posCount, posSum);
+		else
+			System.out.println("Hiç pozitif sayı girmediniz!...");
+	}
+
+	public static void printNegativesResult(int negSum, int negCount)
+	{
+		if (negCount != 0)
+			System.out.printf("%d tane negatif sayının toplamı:%d%n", negCount, negSum);
+		else
+			System.out.println("Hiç negatif sayı girmediniz!...");
+	}
+
+	public static void printResult(int posSum, int posCount, int negSum, int negCount)
+	{
+		printPositivesResult(posSum, posCount);
+		printNegativesResult(negSum, negCount);
+	}
+
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.println("Sayıları girmeye başlayınız:");
+
+		int posCount, posSum, negCount, negSum;
+
+		posCount = negCount = 0;
+		posSum = negSum = 0;
+
+		int val;
+
+		System.out.print("Bir sayı giriniz:");
+		while ((val = Integer.parseInt(kb.nextLine())) != 0) {
+			if (val > 0) {
+				posSum += val;
+				++posCount;
+			}
+			else {
+				negSum += val;
+				++negCount;
+			}
+
+			System.out.print("Bir sayı giriniz:");
+		}
+
+		printResult(posSum, posCount, negSum, negCount);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	16.10.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Klavyeden sıfır girilene kadar alınan sayıların pozitif ve negatif olanlarının ayrı ayrı toplamını ve
+	pozitif ve negatif olanlarından kaçar tane girildiğini bulan ve ekrana uygun mesajları yazdıran programcı yazınız
+	Açıklamalar:
+		- Hiç pozitif sayı ve/veya negatif girilmemişse, sayıların girilmediğine ilişkin mesajlar verilecektir. Örneğin:
+		Hiç pozitif sayı girmediniz!...
+		- Mesajları dilediğiniz gibi verebilirsiniz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		FindPosNegSumCountsApp.run();
+	}
+}
+
+class FindPosNegSumCountsApp {
+	public static void printPositivesResult(int posSum, int posCount)
+	{
+		if (posCount != 0)
+			System.out.printf("%d tane pozitif sayının toplamı:%d%n", posCount, posSum);
+		else
+			System.out.println("Hiç pozitif sayı girmediniz!...");
+	}
+
+	public static void printNegativesResult(int negSum, int negCount)
+	{
+		if (negCount != 0)
+			System.out.printf("%d tane negatif sayının toplamı:%d%n", negCount, negSum);
+		else
+			System.out.println("Hiç negatif sayı girmediniz!...");
+	}
+
+	public static void printResult(int posSum, int posCount, int negSum, int negCount)
+	{
+		printPositivesResult(posSum, posCount);
+		printNegativesResult(negSum, negCount);
+	}
+
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.println("Sayıları girmeye başlayınız:");
+
+		int posCount, posSum, negCount, negSum;
+
+		posCount = negCount = 0;
+		posSum = negSum = 0;
+
+		int val;
+
+		while ((val = kb.nextInt()) != 0)
+			if (val > 0) {
+				posSum += val;
+				++posCount;
+			}
+			else {
+				negSum += val;
+				++negCount;
+			}
+
+		printResult(posSum, posCount, negSum, negCount);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Parametresi ile aldığı int türden bir sayının basamak sayısını döndüren countDigits isimli metodu
+	NumberUtil sınıfı içerisinde yazınız ve aşağıdaki kod ile test ediniz.
+	123 -> 3
+	0 -> 1
+	Not: İleride daha iyisi yazılacaktır.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("Bir sayı giriniz?");
+        int val = Integer.parseInt(kb.nextLine());
+        System.out.printf("%d sayısının basamak sayısı : %d%n",val,NumberUtil.countDigits(val));
+    }
+}
+
+class NumberUtil{
+    public static int countDigits(int val)
+    {
+        if(val == 0)
+            return 1;
+        int count = 0;
+        while(val != 0){
+            count++;
+            val/= 10;
+        }
+        return count;
+    }
+}
+//Başka bir çözüm
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		CountDigitsTest.run();
+	}
+}
+
+class CountDigitsTest {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		int val;
+
+		System.out.print("Bir sayı giriniz:");
+
+		while ((val = Integer.parseInt(kb.nextLine())) != 0) {
+			System.out.printf("%d sayısının basamak sayısı:%d%n", val, NumberUtil.countDigits(val));
+			System.out.print("Bir sayı giriniz:");
+		}
+
+		System.out.printf("0 sayısının basamak sayısı:%d%n", NumberUtil.countDigits(0));
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static int countDigits(int val)
+	{
+		if (val == 0)
+			return 1;
+
+		int count = 0;
+
+		while (val != 0) {
+			++count;
+			val /= 10;
+		}
+
+		return count;
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Parametresi ile aldığı int türden bir sayının basamakları toplamına geri dönen sumDigits isimli metodu
+	NumberUtil sınıfı içerisinde yazınız ve aşağıdaki kod ile test ediniz. Metot negatif sayılar için de basamakları toplamını
+	pozitif olarak döndürecektir.
+	123-> 6
+	-123 -> 6
+	0 -> 0
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("Bir sayı giriniz?");
+        int val = Integer.parseInt(kb.nextLine());
+        System.out.printf("%d sayısının basamakları toplamı : %d%n",val,NumberUtil.sumDigits(val));
+    }
+}
+
+class NumberUtil{
+    public static int countDigits(int val)
+    {
+        if(val == 0)
+            return 1;
+        int count = 0;
+        while(val != 0){
+            count++;
+            val/= 10;
+        }
+        return count;
+    }
+    public static int sumDigits(int val)
+    {
+        int sum = 0;
+        while(val != 0){
+            sum += val % 10;
+            val /= 10;
+        }
+        return Math.abs(sum);
+    }
+    public static int reverse(int val)
+    {
+        int rev = 0;
+        while(val != 0){
+            rev *= 10;
+            rev += val % 10;
+            val /= 10;
+        }
+        return rev;
+    }
+}
+//Başka bir çözüm
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		SumDigitsTest.run();
+	}
+}
+
+class SumDigitsTest {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		int val;
+
+		System.out.print("Bir sayı giriniz:");
+
+		while ((val = Integer.parseInt(kb.nextLine())) != 0) {
+			System.out.printf("%d sayısının basamakları toplamı:%d%n", val, NumberUtil.sumDigits(val));
+			System.out.print("Bir sayı giriniz:");
+		}
+
+		System.out.printf("0 sayısının basamakları toplamı:%d%n", NumberUtil.sumDigits(0));
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static int sumDigits(int val)
+	{
+		int sum = 0;
+
+		while (val != 0) {
+			sum += val % 10;
+			val /= 10;
+		}
+
+		return Math.abs(sum);
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Parametresi ile aldığı int türden bir sayının basamakları tersini döndüren reverse isimli metodu
+	NumberUtil sınıfı içerisine yazınız ve aşağıdaki kod ile test ediniz.
+
+	Örneğin: 123 -> 3 * 10 + 2 = 32 -> 32 * 10 + 1 = 321
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("Bir sayı giriniz?");
+        int val = Integer.parseInt(kb.nextLine());
+        System.out.printf("%d sayısının tersi : %d%n",val,NumberUtil.reverse(val));
+    }
+}
+
+class NumberUtil{
+    public static int countDigits(int val)
+    {
+        if(val == 0)
+            return 1;
+        int count = 0;
+        while(val != 0){
+            count++;
+            val/= 10;
+        }
+        return count;
+    }
+    public static int sumDigits(int val)
+    {
+        int sum = 0;
+        while(val != 0){
+            sum += val % 10;
+            val /= 10;
+        }
+        return Math.abs(sum);
+    }
+    public static int reverse(int val)
+    {
+        int rev = 0;
+        while(val != 0){
+            rev *= 10;
+            rev += val % 10;
+            val /= 10;
+        }
+        return rev;
+    }
+}
+//Başka çözüm bir
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		ReverseTest.run();
+	}
+}
+
+class ReverseTest {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		int val;
+
+		System.out.print("Bir sayı giriniz:");
+
+		while ((val = Integer.parseInt(kb.nextLine())) != 0) {
+			System.out.printf("%d sayısının tersi:%d%n", val, NumberUtil.reverse(val));
+			System.out.print("Bir sayı giriniz:");
+		}
+
+		System.out.printf("0 sayısının tersi:%d%n", NumberUtil.reverse(0));
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static int reverse(int val)
+	{
+		int result = 0;
+
+		while (val != 0) {
+			result = result * 10 + val % 10;
+			val /= 10;
+		}
+
+		return result;
+	}
+}
