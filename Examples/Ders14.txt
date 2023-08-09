@@ -1,0 +1,438 @@
+/*----------------------------------------------------------------------------------------------------------------------
+	continue deyimi döngüyü değil döngünün bir adımını sonlandırmak için kullanılır. continue deyiminin de etiketli biçimi
+	vardır. Ancak yapısal programlama ve nesne yönelimli programlama tekniği açısından kullanımı tavsiye edilmez. continue
+	deyiminin etiketsiz biçimi break deyimi kadar sık kullanılmasa da bazı durumlarda okunabilirlik/algılanabilirlik
+	açısında tercih edilebilir. continue deyimi yalnızca döngü deyimlerinde kullanılabilir.
+
+	Aşağıdaki örnekte sıfır ile klavyeden girilen bir sayı arasındaki çift sayılar continue deyimi kullanılarak ekrana
+	bastırılmıştır. Şüphesiz daha kolay yazılabilir. Örnek continue deyiminin çalışmasını göstermek için bu şekilde
+	yazılmıştır.
+	while(<KOŞUL İFADESİ>){
+	     deyim1;
+	     deyim2;
+	     continue;
+	     deyim3;
+	     deyim4;
+	}
+-----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+	continue deyimiyle ilgili aşağıdaki örneği inceleyiniz.
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        System.out.println("Bir sayı giriniz?");
+        int i = Integer.parseInt(kb.nextLine());
+        int result = 1;
+        while(0 < i--){
+            System.out.printf("i : %d%n", i);
+            if(i % 3 == 0)
+              continue;
+            result *= i;
+        }
+        System.out.printf("result : %d%n",result);
+    }
+}
+//---------------------------------------------------------------------------
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+		System.out.print("Bir sayı giriniz:");
+		int count = kb.nextInt();
+
+		for (int i = 0; i < count; ++i) {
+			if (i % 2 != 0)
+				continue;
+
+			System.out.printf("%d ", i);
+		}
+
+
+		System.out.println("\nTekrar yapıyor musunuz?");
+	}
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	Basit bir menü uygulamasının iskeleti
+	(İleride daha iyisi yazılacaktır)
+-----------------------------------------------------------------------------------------------------------------------*/
+
+package csd;
+
+class App {
+    public static void main(String [] args)
+    {
+         MenuApp.run();
+    }
+}
+
+class MenuApp{
+    public static void run()
+    {
+        java.util.Scanner kb = new java.util.Scanner(System.in);
+        int val;
+        while(true){
+            printMenuOptions();
+            System.out.println("Enter Option?");
+            val = Integer.parseInt(kb.nextLine());
+            if(val < 1 || val > 5) {
+                invalidOption();
+                continue;
+            }
+            if(val == 1)
+            {
+                System.out.println("Ekle seçildi");
+                continue;
+            }
+            if(val == 2)
+            {
+                System.out.println("Sil seçildi");
+                continue;
+            }
+            if(val == 3)
+            {
+                System.out.println("Güncelle seçildi");
+                continue;
+            }
+            if(val == 4)
+            {
+                System.out.println("Listele seçildi");
+                continue;
+            }
+            if(val == 5)
+            {
+                break;
+            }
+        }
+        System.out.println("Tekrar yapıyor musunuz?");
+    }
+    public static void invalidOption()
+    {
+        System.out.println("Geçersiz seçenek");
+    }
+    public static void printMenuOptions()
+    {
+        System.out.println("1.Ekle");
+        System.out.println("2.Sil");
+        System.out.println("3.Güncelle");
+        System.out.println("4.Listele");
+        System.out.println("5.Çıkış");
+    }
+}
+/*----------------------------------------------------------------------------------------------------------------------
+	Basit bir menü uygulamasının iskeleti
+	(İleride daha iyisi yazılacaktır)
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		MenuApp.run();
+	}
+}
+
+class MenuApp {
+	public static void printMenu()
+	{
+		System.out.println("1.Ekle");
+		System.out.println("2.Sil");
+		System.out.println("3.Güncelle");
+		System.out.println("4.Listele");
+		System.out.println("5.Çıkış");
+		System.out.print("Seçenek:");
+	}
+
+	public static void doWorkForInsert()
+	{
+		System.out.println("---------------------");
+		System.out.println("\"Ekle\" seçildi");
+		System.out.println("---------------------");
+	}
+
+	public static void doWorkForDelete()
+	{
+		System.out.println("---------------------");
+		System.out.println("\"Sil\" seçildi");
+		System.out.println("---------------------");
+	}
+
+	public static void doWorkForUpdate()
+	{
+		System.out.println("---------------------");
+		System.out.println("\"Güncelle\" seçildi");
+		System.out.println("---------------------");
+	}
+
+	public static void doWorkForList()
+	{
+		System.out.println("---------------------");
+		System.out.println("\"Listele\" seçildi");
+		System.out.println("---------------------");
+	}
+
+	public static void doWorkForInvalidOption()
+	{
+		System.out.println("---------------------");
+		System.out.println("Geçersiz seçenek");
+		System.out.println("---------------------");
+	}
+
+	public static void doWork(int option)
+	{
+		if (option == 1)
+			doWorkForInsert();
+		else if (option == 2)
+			doWorkForDelete();
+		else if (option == 3)
+			doWorkForUpdate();
+		else if (option == 4)
+			doWorkForList();
+	}
+
+	public static void doGoodbyeWork()
+	{
+		System.out.println("Teşekkürler");
+		System.out.println("C ve Sistem Programcıları Derneği");
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		for (;;) {
+			printMenu();
+			int option = Integer.parseInt(kb.nextLine());
+
+			if (option < 1 || option > 5) {
+				doWorkForInvalidOption();
+				continue;
+			}
+
+			if (option == 5)
+				break;
+
+			doWork(option);
+		}
+
+		doGoodbyeWork();
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Basit bir menü uygulamasının iskeleti
+	(İleride daha iyisi yazılacaktır)
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		MenuApp.run();
+	}
+}
+
+class MenuApp {
+	public static void printMenu()
+	{
+		System.out.println("1.Ekle");
+		System.out.println("2.Sil");
+		System.out.println("3.Güncelle");
+		System.out.println("4.Listele");
+		System.out.println("5.Çıkış");
+		System.out.print("Seçenek:");
+	}
+
+	public static void doWorkForInsert()
+	{
+		System.out.println("---------------------");
+		System.out.println("\"Ekle\" seçildi");
+		System.out.println("---------------------");
+	}
+
+	public static void doWorkForDelete()
+	{
+		System.out.println("---------------------");
+		System.out.println("\"Sil\" seçildi");
+		System.out.println("---------------------");
+	}
+
+	public static void doWorkForUpdate()
+	{
+		System.out.println("---------------------");
+		System.out.println("\"Güncelle\" seçildi");
+		System.out.println("---------------------");
+	}
+
+	public static void doWorkForList()
+	{
+		System.out.println("---------------------");
+		System.out.println("\"Listele\" seçildi");
+		System.out.println("---------------------");
+	}
+
+	public static void doWorkForInvalidOption()
+	{
+		System.out.println("---------------------");
+		System.out.println("Geçersiz seçenek");
+		System.out.println("---------------------");
+	}
+
+	public static void doWork(int option)
+	{
+		if (option == 1)
+			doWorkForInsert();
+		else if (option == 2)
+			doWorkForDelete();
+		else if (option == 3)
+			doWorkForUpdate();
+		else if (option == 4)
+			doWorkForList();
+	}
+
+	public static void doGoodbyeWork()
+	{
+		System.out.println("Teşekkürler");
+		System.out.println("C ve Sistem Programcıları Derneği");
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		for (;;) {
+			printMenu();
+			int option = Integer.parseInt(kb.nextLine());
+
+			if (1 <= option && option <= 5) {
+				if (option == 5)
+					break;
+
+				doWork(option);
+			}
+			else
+				doWorkForInvalidOption();
+		}
+
+		doGoodbyeWork();
+	}
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+	05.11.2022
+-----------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Parametresi ile aldığı n sayısı için n-inci Fibonacci sayısını döndüren getFibonacciNumber isimli
+	metodu NumberUtil sınıfı içerisinde yazınız ve aşağıdaki kod ile test ediniz
+
+	Açıklamalar:
+		- Fibonacci sayıları
+			0 1 1 2 3 5 8 13 21 ...
+		- Metot pozitif olmayan n değerleri için kontrol yapmayacaktır
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		GetFibonacciNumberTest.run();
+	}
+}
+
+class GetFibonacciNumberTest {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		for (;;) {
+			System.out.print("Bir sayı giriniz:");
+			int n = Integer.parseInt(kb.nextLine());
+
+			if (n <= 0)
+				break;
+
+			System.out.printf("%d.Fibonacci sayısı:%d%n", n, NumberUtil.getFibonacciNumber(n));
+		}
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static int getFibonacciNumber(int n)
+	{
+		if (n <= 2)
+			return n - 1;
+
+		int prev1 = 1, prev2 = 0, val = prev1 + prev2;
+
+		for (int i = 3; i < n; ++i) {
+			prev2 = prev1;
+			prev1 = val;
+			val = prev1 + prev2;
+		}
+
+		return val;
+	}
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+	Sınıf Çalışması: Parametresi ile aldığı int türden bir sayıdan büyük ilk Fibonacci sayısına geri dönen getNextFibonacciNumber
+	isimli metodu NumberUtil sınıfı içerisinde yazınız ve aşağıdaki kod ile test ediniz
+-----------------------------------------------------------------------------------------------------------------------*/
+package csd;
+
+class App {
+	public static void main(String [] args)
+	{
+		GetNextFibonacciNumberTest.run();
+	}
+}
+
+class GetNextFibonacciNumberTest {
+	public static void run()
+	{
+		java.util.Scanner kb = new java.util.Scanner(System.in);
+
+		for (;;) {
+			System.out.print("Bir sayı giriniz:");
+			int val = Integer.parseInt(kb.nextLine());
+
+			System.out.printf("%d den sonraki ilk Fibonacci sayısı:%d%n", val, NumberUtil.getNextFibonacciNumber(val));
+
+			if (val == 0)
+				break;
+		}
+
+		System.out.println("Tekrar yapıyor musunuz?");
+	}
+}
+
+class NumberUtil {
+	public static int getNextFibonacciNumber(int val)
+	{
+		if (val < 0)
+			return 0;
+
+		int prev1 = 1, prev2 = 0, next;
+
+		for (;;) {
+			next = prev1 + prev2;
+
+			if (next > val)
+				return next;
+
+			prev2 = prev1;
+			prev1 = next;
+		}
+	}
+}
